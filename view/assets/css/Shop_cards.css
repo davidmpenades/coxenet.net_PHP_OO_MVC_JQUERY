@@ -1,0 +1,76 @@
+* CARD SHOP */ body {
+    background: #696868
+}
+
+.ratings i {
+    font-size: 16px;
+    color: red
+}
+
+.strike-text {
+    color: red;
+    text-decoration: line-through
+}
+
+.product-image {
+    width: 100%
+}
+
+.dot {
+    height: 7px;
+    width: 7px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 3px;
+    background-color: blue;
+    border-radius: 50%;
+    display: inline-block
+}
+
+.spec-1 {
+    color: #938787;
+    font-size: 15px
+}
+
+h5 {
+    font-weight: 400
+}
+
+.para {
+    font-size: 16px
+}
+.button-info {
+    color: white;
+        border-radius: 4px;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        background: rgb(66, 184, 221);        
+}
+.button-info:hover {
+    background-color: green;
+    /* Green */
+    color: rgb(244, 246, 247);
+}
+.button-filtro {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(41, 219, 80);
+}
+
+.button-filtro:hover {
+    background-color: rgb(5, 248, 5);
+    /* Green */
+    color: rgb(235, 240, 241);
+}
+.button-borrar {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(226, 31, 5);
+}
+
+.button-borrar:hover {
+    background-color: rgb(255, 60, 0);
+    /* Green */
+    color: rgb(236, 243, 245);
+}
