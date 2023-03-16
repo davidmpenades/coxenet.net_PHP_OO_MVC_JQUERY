@@ -233,7 +233,8 @@ function loadDetails(id_car) {
             "</div>" +
             "</div>" +
             "</div>"           
-      );
+      )
+   
       
       new Glider(document.querySelector(".date_img"), {
         slidesToShow: 1,
@@ -245,12 +246,115 @@ function loadDetails(id_car) {
         },
       });
       mapBox(data[0]);
- 
+
+        more_cars_related(data[0].marca);
       
     })
     .catch(function () {
       // window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Load_Details SHOP";
     });
+}
+function more_cars_related(marca) {
+  // console.log(marca);
+    var marca = marca;
+    var items = 0;
+    ajaxPromise('module/shop/controller/ctrl_shop.php?op=count_cars_related', 'POST', 'JSON', { 'marca': marca })
+      .then(function (data) {
+          // console.log(data);
+        var total_items = data[0].n_prod;
+        // console.log(total_items);
+        cars_related(0, marca, total_items);
+        
+            $(document).on("click", '.load_more_button', function() {
+                items = items + 3;
+                // $('.more_car__button').empty();
+                cars_related(items, marca, total_items);
+            });
+        }).catch(function() {
+            console.log('error total_items');
+        });
+}
+function cars_related(items, marca, total_items) {
+  // console.log(marca);
+
+    ajaxPromise("module/shop/controller/ctrl_shop.php?op=cars_related", 'POST', 'JSON', { 'marca': marca, 'total_items': total_items, 'items': items })
+      .then(function (data) {
+        console.log(data.length);
+        $('.title_content').empty();
+        
+           if (items === total_items-1) {
+                    $('<button class="no-results" id="">No hay mas coches disponibles....</button></br>').appendTo('.title_content');
+                } else {
+                    $('<button class="load_more_button" id="load_more_button">LOAD MORE</button>').appendTo('.title_content');
+                }
+
+                for (i = 0; i < data.length; i++) {
+                    $('<div></div>').attr({ id: data[i].id_car, class: 'title_content' }).appendTo('.results')
+                        .html(
+                               "<li class='portfolio-item'>" +
+                                "<div class='item-main'>" +
+                                "<div class='portfolio-image'>" +
+                                "<img src = " + data[i].img_car + " alt='imagen car' </img> " +
+                                "</div>" +
+                                "<h5>" + data[i].cod_marca + "  " + data[i].cod_modelo + "</h5>" +
+                                "</div>" +
+                                "</li>"
+                        );
+                }
+        }).catch(function() {
+            console.log("error pero paciencia");
+        });
+}
+function load_pagination() {
+    if (localStorage.getItem('filters')) {
+        var all_filters = JSON.parse(localStorage.getItem('filters'));
+        var combustible = all_filters[0].combustible;
+        var marca = all_filters[1].cod_marca[0];
+        var category = all_filters[2].category[0];
+
+        var url = 'module/shop/controller/ctrl_shop.php?op=count_cars_filters&color=' + color + '&doors=' + doors + '&category=' + category;
+    } else if (localStorage.getItem('brand_filter')) {
+        console.log("Paginación marcas home");
+    } else if (localStorage.getItem('category_filter')) {
+        console.log("Paginación categorias home");
+    } else if (localStorage.getItem('type_motor_filter')) {
+        console.log("Paginación tipos coches home");
+    } else if (localStorage.getItem('search')) {
+        console.log("Paginación search");
+    } else if (localStorage.getItem('order')) {
+        var value_orderby = JSON.parse(localStorage.getItem('order'));
+        var url = 'module/shop/ctrl/ctrl_shop.php?op=count_order_filter';
+        var sdata = { 'value_orderby': value_orderby }
+    } else {
+        var url = "module/shop/controller/ctrl_shop.php?op=count_cars_pag";
+    }
+    ajaxPromise(url, 'POST', 'JSON', sdata)
+        .then(function(data) {
+            var total_prod = data[0].n_prod;
+
+            if (total_prod >= 4) {
+                total_pages = Math.ceil(total_prod / 4);
+            } else {
+                total_pages = 1;
+            }
+
+            $('#pagination').bootpag({
+                total: total_pages,
+                page: localStorage.getItem('page') ? localStorage.getItem('page') : 1,
+                maxVisible: total_pages
+            }).on('page', function(event, num) {
+                localStorage.setItem('page', num);
+                localStorage.removeItem('id_car');
+                total_prod = 4 * (num - 1);
+                if (total_prod == 0) {
+                    localStorage.setItem('total_prod', 0)
+                }
+                loadCars(total_prod, 4);
+                $('html, body').animate({ scrollTop: $(".list__content") });
+            });
+        }).catch(function() {
+            console.log('Fail pagination');
+        });
 }
 function print_filters() {
   $('<div class="div-filters"></div>').appendTo(".filters")
@@ -408,8 +512,6 @@ function filter_button() {
     // highlight(filter);
   });
 }
-
-
 function remove() {
   $(document).on("click", ".filter_remove", function () {
     localStorage.removeItem("filter_combustible");
@@ -427,7 +529,7 @@ function mapBox_all(data) {
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [-0.61667, 38.83966492354664], // starting position [lng, lat]
-        zoom: 6 // starting zoom
+        zoom: 7 // starting zoom
     });
 
     for (row in data) {
@@ -467,5 +569,6 @@ $(document).ready(function () {
   clicks();
   print_filters();
   filter_button();
+  load_pagination();
   remove();
 });

@@ -1,5 +1,5 @@
 <?php
-    $path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V9/';
+    $path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
     include($path . "/module/home/model/DAO_home.php");
     session_start();
 

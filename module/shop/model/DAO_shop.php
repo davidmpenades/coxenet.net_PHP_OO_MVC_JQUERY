@@ -1,5 +1,5 @@
 <?php 
-	$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V9/';
+	$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
     include($path . "/model/connect.php");
 
 class DAO_shop
@@ -133,6 +133,92 @@ class DAO_shop
 				$retrArray[] = $row;
 			}
 		}
+		return $retrArray;
+	}
+		function count_pagination($filter){
+			
+			$consulta = "SELECT COUNT(c.*)					
+					FROM (SELECT c.id_car,c.km,c.num_matricula,c.cod_combustible,c.categoria,c.observaciones,c.puertas,c.precio,c.cod_etiqueta,c.f_mat,c.color,c.city,c.cod_modelo,m.descripcion modelo, f.img_car,  
+					co.descripcion combustible, m.cod_marca marca,carr.descripcion carroceria,c.lon,c.lat,c.visitas
+					FROM car c INNER JOIN fotos f INNER JOIN categoria ca INNER JOIN combustible co INNER JOIN modelo m INNER JOIN carroceria carr
+					ON c.num_bastidor = f.num_bastidor AND f.img_car LIKE '%\pr-%' AND c.categoria = ca.cod_categoria AND c.cod_combustible = co.cod_combustible 
+					AND c.cod_modelo =m.cod_modelo AND c.carroceria= carr.cod_carroceria) AS c";
+
+		for ($i = 0; $i < count($filter); $i++) {
+			if ($i == 0) {
+				if ($filter[$i][0] == 'order'){
+                        $consulta.= " ORDER BY " . $filter[$i][1] . " ASC";
+
+				} else {
+					$consulta .= " WHERE c." . $filter[$i][0] . '= "' . $filter[$i][1] . '"';
+				}
+			} else {
+				if ($filter[$i][0] == 'order') {
+					$consulta .= " ORDER BY " . $filter[$i][1] . " ASC";
+
+				} else {
+					$consulta .= " AND c." . $filter[$i][0] . '= "' . $filter[$i][1] . '"';
+				}
+			}
+		}
+		// echo json_encode($consulta);
+		// exit;
+
+		$conexion = connect::con();
+		$res = mysqli_query($conexion, $consulta);
+		connect::close($conexion);
+
+		$retrArray = array();
+		if ($res->num_rows > 0) {
+			while ($row = mysqli_fetch_assoc($res)) {
+				$retrArray[] = $row;
+			}
+		}
+		return $retrArray;
+		}
+		function select_cars_related($marca, $total, $items){
+		// echo json_encode($marca);
+		// echo json_encode($total);
+		// echo json_encode($items);
+		// exit;
+		$sql = "SELECT * 
+				FROM car c, modelo m
+				WHERE c.cod_modelo = m.cod_modelo 
+				AND m.cod_marca = '$marca'
+				LIMIT $items, $total;";
+		// echo json_encode($sql);
+		// exit;
+		$conexion = connect::con();
+		$res = mysqli_query($conexion, $sql);
+		connect::close($conexion);
+
+		
+		$retrArray = array();
+		if (mysqli_num_rows($res) > 0) {
+			while ($row = mysqli_fetch_assoc($res)) {
+				$retrArray[] = $row;
+			}
+		}
+		return $retrArray;
+	}
+		function count_more_cars_related($marca){
+
+		$sql = "SELECT COUNT(*) AS n_prod
+				FROM car c, modelo m
+				WHERE c.cod_modelo = m.cod_modelo AND m.cod_marca = '$marca'";
+		
+		
+		$conexion = connect::con();
+		$res = mysqli_query($conexion, $sql);
+		connect::close($conexion);
+
+		$retrArray = array();
+		if (mysqli_num_rows($res) > 0) {
+			while ($row = mysqli_fetch_assoc($res)) {
+				$retrArray[] = $row;
+			}
+		}
+		
 		return $retrArray;
 	}
 }

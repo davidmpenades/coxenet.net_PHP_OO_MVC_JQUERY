@@ -1,5 +1,5 @@
 <?php
-	$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V9/';
+	$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
 	include ($path . '/module/shop/model/DAO_shop.php');
 
 	switch ($_GET['op']) {
@@ -71,6 +71,17 @@
 					echo "error";
 				}
 				break;
+
+	case 'count_paginaton';
+				$homeQuery = new DAO_shop();
+				$selSlide = $homeQuery -> count_pagination($_POST['filter']);
+				if (!empty($selSlide)) {
+					echo json_encode($selSlide);
+				}
+				else {
+					echo "error";
+				}
+				break;
 				
 	case 'filter_marca';
 			$homeQuery = new DAO_shop();
@@ -125,5 +136,61 @@
 				else {
 					echo "error";
 				}
-				break;      
+				break;
+	case 'cars_related':
+		// echo json_encode("hola");
+		// exit;
+        $marca = $_POST['marca'];
+		// echo json_encode($marca);
+		// exit;
+        $total =  $_POST['total_items'];
+		// echo json_encode($total);
+		// exit;
+        $items =  $_POST['items'];
+		// echo json_encode($items);
+		// exit;
+        try {
+            $dao = new DAO_Shop();
+            $rdo = $dao->select_cars_related($marca, $total, $items);
+        } catch (Exception $e) {
+            echo json_encode("error");
+            exit;
+        }
+        if (!$rdo) {
+            echo json_encode("error");
+            exit;
+        } else {
+            $dinfo = array();
+            foreach ($rdo as $row) {
+                array_push($dinfo, $row);
+            }
+            echo json_encode($dinfo);
+        }
+        break;
+	case 'count_cars_related';
+		// echo json_encode("hola php");
+		// exit;
+	    $marca = $_POST['marca'];
+		// echo json_encode($_POST['marca']);
+		// exit;
+        try {
+            $dao = new DAO_Shop();
+            $rdo = $dao->count_more_cars_related($marca);
+			// echo json_encode($rdo);
+			// exit;
+        }catch (Exception $e) {
+            echo json_encode("error");
+            exit;
+        }
+        if (!$rdo) {
+            echo json_encode("error");
+            exit;
+        } else {
+            $dinfo = array();
+            foreach ($rdo as $row) {
+                array_push($dinfo, $row);
+            }
+            echo json_encode($dinfo);
+        }
+		break;
 	}

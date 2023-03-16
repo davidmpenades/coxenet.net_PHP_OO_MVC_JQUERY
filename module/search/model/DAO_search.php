@@ -1,5 +1,5 @@
 <?php
-$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V8';
+$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10';
 include($path . "/model/connect.php");
 
 class DAO_search {

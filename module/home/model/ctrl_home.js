@@ -183,7 +183,86 @@ function clicks() {
         }, 500);  
     });
   } 
+function loadSugerencias() {
+    var limit = 3;
 
+    $(document).on("click", '#btn-more-books', function() {
+        limit = limit + 3;
+        $('.books_car').remove();
+        $('#load_more_books').remove();
+        
+        ajaxPromise('https://www.googleapis.com/books/v1/volumes?q=Cars','GET', 'JSON')
+            .then(function(data) {
+                if (limit === 9) {
+                    $('<button class="no-results" id="">No hay mas libros disponibles....</button></br>').appendTo('.btn-more-books');
+                } else {
+                    $('<button class="load_more_button" id="load_more_books">LOAD MORE</button>').appendTo('.btn-more-books');
+                }
+
+                for (i = 0; i < limit; i++) {
+                    $('<div></div>').attr({ id: 'books_car', class: 'books_car' }).appendTo('.containerbooks')
+                        .html(
+                            '<div class="col-md-4 col-sm-4 col-xs-12">' +
+                            '<div class="panel panel-danger adjust-border-radius">' +
+                            '<div class="title_book panel-heading adjust-border">' +
+                            '<h4>' + data.items[i].volumeInfo.title + '</h4>' +
+                            '</div>' +
+                            '<div class="panel-body">' +
+                            '<ul class="plan">' +
+                            '<li class="Img_new"><img src=' + data.items[i].volumeInfo.imageLinks.thumbnail + '</li>' +
+                            '<li><i id="col-ico" class="fa-solid fa-user-large fa-sm"></i>&nbsp;&nbsp;' + data.items[i].volumeInfo.authors[0] + '</li>' +
+                            '<li><i id="col-ico" class="fa-solid fa-calendar-days fa-sm"></i>&nbsp;&nbsp;' + data.items[i].volumeInfo.publishedDate + '</li>' +
+                            '</ul>' +
+                            '</div>' +
+                            '<div class="panel-footer">' +
+                            '<a href=' + data.items[i].volumeInfo.infoLink + ' target="_blank" class="btn btn-danger btn-block btn-lg adjust-border-radius">MORE INFO</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                }
+            }).catch(function() {
+                // window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=News cars HOME";
+            });
+    })
+}
+
+function getSugerencias() {
+    limit = 3;
+
+    ajaxPromise('https://www.googleapis.com/books/v1/volumes?q=Cars','GET', 'JSON')
+        .then(function(data) {
+            data.items.length = limit;
+            $('<h2 class="cat"></h2>').appendTo('.containerbooks');
+            $('<button class="load_more_button" id="load_more_books">LOAD MORE</button>').appendTo('.btn-more-books');
+            
+            for (i = 0; i < data.items.length; i++) {
+                $('<div></div>').attr({ id: 'books_car', class: 'books_car' }).appendTo('.containerbooks')
+                    .html(
+                        '<div class="col-md-4 col-sm-4 col-xs-12">' +
+                        '<div class="panel panel-danger adjust-border-radius">' +
+                        '<div class="title_book panel-heading adjust-border">' +
+                        '<h4>' + data.items[i].volumeInfo.title + '</h4>' +
+                        '</div>' +
+                        '<div class="panel-body">' +
+                        '<ul class="plan">' +
+                        '<li class="Img_new"><img src="' + data.items[i].volumeInfo.imageLinks.thumbnail + '"</li>' +
+                        '<li><i id="col-ico" class="fa-solid fa-user-large fa-sm"></i>&nbsp;&nbsp;' + data.items[i].volumeInfo.authors[0] + '</li>' +
+                        '<li><i id="col-ico" class="fa-solid fa-calendar-days fa-sm"></i>&nbsp;&nbsp;' + data.items[i].volumeInfo.publishedDate + '</li>' +
+                        '</ul>' +
+                        '</div>' +
+                        '<div class="panel-footer">' +
+                        '<a href=' + data.items[i].volumeInfo.infoLink + ' target="_blank" class="btn btn-danger btn-block btn-lg adjust-border-radius">MORE INFO</a>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>'
+                    );
+            }
+        }).catch(function() {
+            // window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=News cars HOME";
+        });
+    loadSugerencias();
+}
 $(document).ready(function () {
     clicks();
     carousel_Brands();
@@ -191,5 +270,5 @@ $(document).ready(function () {
     loadCatTypes();
     loadCarroceria();
     loadvisitas();
-    // console.log("hola");
+    getSugerencias()
 });
