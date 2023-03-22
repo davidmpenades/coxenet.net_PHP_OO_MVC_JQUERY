@@ -4,15 +4,40 @@
 
 class DAO_shop
 {
-	function select_all_cars()
-	{
+	function select_all_cars($total_prod,$items_page){
+		// echo json_encode($total_prod);
+		// exit;
 
 		$sql = "SELECT c.id_car,m.cod_marca marca,c.km,c.puertas,c.color,c.city ciudad,c.f_mat,m.descripcion modelo, c.num_matricula, c.precio,c.observaciones,f.img_car,
-		               ca.descripcion carroceria,cat.nombre_cat categoria,ci.descripcion cilindrada,e.descripcion etiqueta,c.lon,c.lat
+		        ca.descripcion carroceria,cat.nombre_cat categoria,ci.descripcion cilindrada,e.descripcion etiqueta,c.lon,c.lat
                 FROM car c, modelo m,fotos f,carroceria ca,categoria cat,cilindrada ci,combustible co,etiqueta e
                 WHERE c.cod_modelo=m.cod_modelo AND c.num_bastidor=f.num_bastidor AND f.img_car like '%\pr-%' 
 				AND c.carroceria=ca.cod_carroceria AND c.categoria=cat.cod_categoria AND c.cod_combustible=co.cod_combustible
-				AND c.cod_cil=ci.cod_cilindrada AND c.cod_etiqueta=e.cod_etiqueta ORDER BY c.visitas DESC";
+				AND c.cod_cil=ci.cod_cilindrada AND c.cod_etiqueta=e.cod_etiqueta ORDER BY c.visitas DESC
+				LIMIT $total_prod,$items_page;";
+		$connection = connect::con();
+		// echo json_encode($sql);
+		// exit;
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+
+		$retrArray = array();
+		if (mysqli_num_rows($res) > 0) {
+			while ($row = mysqli_fetch_assoc($res)) {
+				$retrArray[] = $row;
+			}
+		}
+		return $retrArray;
+	}
+	function count_all_cars(){
+		// echo json_encode($total_prod);
+		// exit;
+
+		$sql = "SELECT COUNT(*) n_prod
+                FROM car c, modelo m,fotos f,carroceria ca,categoria cat,cilindrada ci,combustible co,etiqueta e
+                WHERE c.cod_modelo=m.cod_modelo AND c.num_bastidor=f.num_bastidor AND f.img_car like '%\pr-%' 
+				AND c.carroceria=ca.cod_carroceria AND c.categoria=cat.cod_categoria AND c.cod_combustible=co.cod_combustible
+				AND c.cod_cil=ci.cod_cilindrada AND c.cod_etiqueta=e.cod_etiqueta ORDER BY c.visitas DESC;";
 		$connection = connect::con();
 		// echo json_encode($sql);
 		// exit;
@@ -92,9 +117,9 @@ class DAO_shop
 		}
 		return $retrArray;
 	}
-	function filters($filter)
+	function filters($filter,$total_prod,$items)
 	{
-		// echo json_encode($filter);
+		// echo json_encode($total_prod);
 		// exit;
 		$consulta = "SELECT c.*					
 					FROM (SELECT c.id_car,c.km,c.num_matricula,c.cod_combustible,c.categoria,c.observaciones,c.puertas,c.precio,c.cod_etiqueta,c.f_mat,c.color,c.city,c.cod_modelo,m.descripcion modelo, f.img_car,  
@@ -120,6 +145,7 @@ class DAO_shop
 				}
 			}
 		}
+		$consulta.=" LIMIT " . $total_prod . "," . $items ;
 		// echo json_encode($consulta);
 		// exit;
 
@@ -136,14 +162,16 @@ class DAO_shop
 		return $retrArray;
 	}
 		function count_pagination($filter){
-			
-			$consulta = "SELECT COUNT(c.*)					
+			// echo json_encode($filter);
+			// exit;
+			$consulta = "SELECT COUNT(c.id_car) n_prod
 					FROM (SELECT c.id_car,c.km,c.num_matricula,c.cod_combustible,c.categoria,c.observaciones,c.puertas,c.precio,c.cod_etiqueta,c.f_mat,c.color,c.city,c.cod_modelo,m.descripcion modelo, f.img_car,  
 					co.descripcion combustible, m.cod_marca marca,carr.descripcion carroceria,c.lon,c.lat,c.visitas
 					FROM car c INNER JOIN fotos f INNER JOIN categoria ca INNER JOIN combustible co INNER JOIN modelo m INNER JOIN carroceria carr
 					ON c.num_bastidor = f.num_bastidor AND f.img_car LIKE '%\pr-%' AND c.categoria = ca.cod_categoria AND c.cod_combustible = co.cod_combustible 
 					AND c.cod_modelo =m.cod_modelo AND c.carroceria= carr.cod_carroceria) AS c";
-
+			echo json_encode($consulta);
+			// exit;
 		for ($i = 0; $i < count($filter); $i++) {
 			if ($i == 0) {
 				if ($filter[$i][0] == 'order'){

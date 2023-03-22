@@ -12,9 +12,13 @@
 		case 'all_cars':
 			// echo json_encode("hola lista op");
 			// exit;
+			$prod = $_POST['total_prod'];
+			$items = $_POST['items'];
+			// echo json_encode("productos ".$prod." items ".$items);
+			// exit;
 			 try{
                 $daoshop = new DAO_shop();
-                $container_shop = $daoshop->select_all_cars();
+                $container_shop = $daoshop->select_all_cars($prod, $items);
             } catch(Exception $e){
                 echo json_encode("error");
             }
@@ -59,11 +63,11 @@
 		
 
    	    case 'filter';
-		// echo json_encode("hola filter");
+		// echo json_encode($_POST['filter']);
 		// exit;
 			
 				$homeQuery = new DAO_shop();
-				$selSlide = $homeQuery -> filters($_POST['filter']);
+				$selSlide = $homeQuery -> filters($_POST['filter'], $_POST['total_prod'], $_POST['items']);
 				if (!empty($selSlide)) {
 					echo json_encode($selSlide);
 				}
@@ -72,9 +76,9 @@
 				}
 				break;
 
-	case 'count_paginaton';
+	case 'count_all';
 				$homeQuery = new DAO_shop();
-				$selSlide = $homeQuery -> count_pagination($_POST['filter']);
+				$selSlide = $homeQuery -> count_all_cars();
 				if (!empty($selSlide)) {
 					echo json_encode($selSlide);
 				}
@@ -82,10 +86,22 @@
 					echo "error";
 				}
 				break;
-				
+	case 'count_filters'; 
+	// echo json_encode("hola count filters");
+	// exit;   
+				$homeQuery = new DAO_shop();
+				$selSlide = $homeQuery -> count_pagination($_POST['filter']);
+				echo json_encode($selSlide);
+				if (!empty($selSlide)) {
+					echo json_encode($selSlide);
+				}
+				else {
+					echo "error";
+				}
+				break;			
 	case 'filter_marca';
 			$homeQuery = new DAO_shop();
-				$selSlide = $homeQuery -> filters($_POST['filter']);
+				$selSlide = $homeQuery -> filters($_POST['filter'], $_POST['total_prod'], $_POST['items']);
 				if (!empty($selSlide)) {
 					echo json_encode($selSlide);
 				}
@@ -96,7 +112,7 @@
 
 	case 'filter_carro';
 			$homeQuery = new DAO_shop();
-				$selSlide = $homeQuery -> filters($_POST['filter']);
+				$selSlide = $homeQuery -> filters($_POST['filter'], $_POST['total_prod'], $_POST['items']);
 				if (!empty($selSlide)) {
 					echo json_encode($selSlide);
 				}
@@ -107,7 +123,7 @@
 				
 	case 'filter_tipo';
 			$homeQuery = new DAO_shop();
-				$selSlide = $homeQuery -> filters($_POST['filter']);
+				$selSlide = $homeQuery -> filters($_POST['filter'], $_POST['total_prod'], $_POST['items']);
 				if (!empty($selSlide)) {
 					echo json_encode($selSlide);
 				}
@@ -118,7 +134,7 @@
 				
 	case 'filter_comb';
 			$homeQuery = new DAO_shop();
-				$selSlide = $homeQuery -> filters($_POST['filter']);
+				$selSlide = $homeQuery -> filters($_POST['filter'], $_POST['total_prod'], $_POST['items']);
 				if (!empty($selSlide)) {
 					echo json_encode($selSlide);
 				}
@@ -129,7 +145,7 @@
 	case 'filter_search';
 
 			$homeQuery = new DAO_shop();
-				$selSlide = $homeQuery -> filters($_POST['filter']);
+				$selSlide = $homeQuery -> filters($_POST['filter'], $_POST['total_prod'], $_POST['items']);
 				if (!empty($selSlide)) {
 					echo json_encode($selSlide);
 				}

@@ -1,8 +1,8 @@
 
-function ajaxForSearch(url, filter) {
-  ajaxPromise(url, "POST", "JSON", { filter: filter })
+function ajaxForSearch(url, filter, total_prod, items) {
+  ajaxPromise(url, "POST", "JSON", { 'filter': filter, 'total_prod': total_prod,'items':items })
     .then(function (data) {
-      //  console.log(data);
+      console.log(data);
 
       $("#all_cars").empty();
       if (filter === "error") {
@@ -10,7 +10,7 @@ function ajaxForSearch(url, filter) {
         $("<div></div>")
           .appendTo("#all_cars")
           .html(
-            "<h3>¡No se encuentarn resultados con los filtros aplicados!</h3>"
+            "<h3>¡No se encuentran resultados con los filtros aplicados!</h3>"
           );
       } else {
         for (row in data) {
@@ -66,7 +66,7 @@ function ajaxForSearch(url, filter) {
     });
 }
 
-function loadListCar() {
+function loadListCar(total_prod=0,items=3) {
   //filtro contiene el valor de filter almacenado en localstorage, con .getitem lo recogemos
   //parse, elimina el encapsulado del stringify
     // console.log(filter);
@@ -78,6 +78,7 @@ function loadListCar() {
   var home_comb = JSON.parse(localStorage.getItem("home_comb")) || false;
   var search = JSON.parse(localStorage.getItem("filters_search")) || false;
   var homevisitas = JSON.parse(localStorage.getItem("homevisitas")) || false;
+  var filtro = JSON.parse(localStorage.getItem("filter_pag")) || false;
   // var order = JSON.parse(localStorage.getItem("homeorder")) || false;
 
   // console.log(search);
@@ -85,35 +86,43 @@ function loadListCar() {
 
   //comprobamos si filtro tiene valor para apuntar a ajaxForSearch
   if (filtro != false) {
-    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter", filtro);
-    
+    // console.log("hola1persi");
+    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter", filtro,total_prod,items);
+    localStorage.setItem('filter_pag',filtro);
   } else if (home_carro != false) {
+    console.log("hola2persi");
         
-    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter_carro", home_carro);
+    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter_carro", home_carro,total_prod,items);
+    localStorage.setItem('filter_pag',home_carro);
     remove(filtro);
   }
   else if (home_tipo != false) {
+    console.log("hola3persi");
    
    
-    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter_tipo", home_tipo);
+    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter_tipo", home_tipo,total_prod,items);
+    localStorage.setItem('filter_pag',home_tipo);
+
     remove(filtro);
   } 
   else if (home_marca != false) {
+    console.log("hola4persi");
     
-    
-    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter_marca", home_marca);
+    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter_marca", home_marca,total_prod,items);
+    localStorage.setItem('filter_pag',home_marca);
     remove(filtro);
   }
   else if (home_comb != false) {
-   
-    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter_comb", home_comb);
+   console.log("hola5");
+    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter_comb", home_comb,total_prod,items);
+    localStorage.setItem('filter_pag',home_comb);
     remove(filtro);
   }
   else if (search != false) {
     
-    // console.log("hola search");
     console.log(search);
-    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter", search);
+    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter", search,total_prod,items);
+    localStorage.setItem('filter_pag', search);
     localStorage.removeItem("filters_search");
   }
   else if (homevisitas != false) {
@@ -132,7 +141,8 @@ function loadListCar() {
 // }
   else {
  
-    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=all_cars");
+    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=all_cars",undefined,total_prod,items);
+    
   }
 }
 
@@ -306,56 +316,42 @@ function cars_related(items, marca, total_items) {
         });
 }
 function load_pagination() {
-    if (localStorage.getItem('filters')) {
-        var all_filters = JSON.parse(localStorage.getItem('filters'));
-        var combustible = all_filters[0].combustible;
-        var marca = all_filters[1].cod_marca[0];
-        var category = all_filters[2].category[0];
-
-        var url = 'module/shop/controller/ctrl_shop.php?op=count_cars_filters&color=' + color + '&doors=' + doors + '&category=' + category;
-    } else if (localStorage.getItem('brand_filter')) {
-        console.log("Paginación marcas home");
-    } else if (localStorage.getItem('category_filter')) {
-        console.log("Paginación categorias home");
-    } else if (localStorage.getItem('type_motor_filter')) {
-        console.log("Paginación tipos coches home");
-    } else if (localStorage.getItem('search')) {
-        console.log("Paginación search");
-    } else if (localStorage.getItem('order')) {
-        var value_orderby = JSON.parse(localStorage.getItem('order'));
-        var url = 'module/shop/ctrl/ctrl_shop.php?op=count_order_filter';
-        var sdata = { 'value_orderby': value_orderby }
-    } else {
-        var url = "module/shop/controller/ctrl_shop.php?op=count_cars_pag";
-    }
-    ajaxPromise(url, 'POST', 'JSON', sdata)
-        .then(function(data) {
-            var total_prod = data[0].n_prod;
-
-            if (total_prod >= 4) {
-                total_pages = Math.ceil(total_prod / 4);
-            } else {
-                total_pages = 1;
-            }
-
-            $('#pagination').bootpag({
-                total: total_pages,
-                page: localStorage.getItem('page') ? localStorage.getItem('page') : 1,
-                maxVisible: total_pages
-            }).on('page', function(event, num) {
-                localStorage.setItem('page', num);
-                localStorage.removeItem('id_car');
-                total_prod = 4 * (num - 1);
-                if (total_prod == 0) {
-                    localStorage.setItem('total_prod', 0)
-                }
-                loadCars(total_prod, 4);
-                $('html, body').animate({ scrollTop: $(".list__content") });
-            });
-        }).catch(function() {
-            console.log('Fail pagination');
-        });
+  
+  // console.log("filter");
+  
+  if (localStorage.getItem('filter_pag') != undefined) {
+    // console.log("hola filter_pag");
+    var url = "module/shop/controller/ctrl_shop.php?op=count_filters";
+    var filter = localStorage.getItem('filter_pag');
+    console.log(filter);
+} else {
+    var url = "module/shop/controller/ctrl_shop.php?op=count_all";
+    var filter = undefined;
 }
+  ajaxPromise(url, 'POST', 'JSON', filter)
+          .then(function(data) {
+            console.log(data);
+              var total_prod = data[0].n_prod;
+              console.log(total_prod);
+
+              if (total_prod >= 3) {
+                  total_pages = Math.ceil(total_prod / 3)
+              } else {
+                  total_pages = 1;
+              }
+            $('#show_paginator').bootpag({
+              total: total_pages,
+              page: 1,
+              maxVisible: 3
+          }).on('page', function(event, num)
+          {
+            localStorage.setItem('page', num);
+            total_prod = 3 * (num - 1);
+            loadListCar(total_prod, 3);
+            //  $("#dynamic_content").html("Page " + num); // or some ajax content loading...
+          });
+          })
+  }
 function print_filters() {
   $('<div class="div-filters"></div>').appendTo(".filters")
     .html(
@@ -484,7 +480,7 @@ function filter_button() {
 
   $(document).on("click", ".filter_button", function () {
     var filter = [];
-
+    // var filter_pag =  [];
     if (localStorage.getItem("filter_combustible")) {
       filter.push(["combustible", localStorage.getItem("filter_combustible")]);
     }
@@ -500,12 +496,19 @@ function filter_button() {
     if (localStorage.getItem("filter_order")) {
       filter.push(["order", localStorage.getItem("filter_order")]);
     }
+    // if (localStorage.getItem("filter_order")) {
+    //   filter_pag.push(["filter_pag", localStorage.getItem(filter)]);
+    // }
     console.log(filter);
     //con .stringify convierte en array filter, o dicho de otra forma lo encapsula
-    // localStorage.setItem("filter", JSON.stringify(filter));
-
+    localStorage.setItem("filter", JSON.stringify(filter));
+       console.log(filter);
     if (filter) {
+      localStorage.setItem("filter_pag", json.stringify(filter));
       ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter", filter);
+      load_pagination();
+      // loadListCar();
+      location.reload();
     } else {
       ajaxForSearch("module/shop/controller/ctrl_shop.php?op=all_cars");
     }
