@@ -127,6 +127,7 @@ function clicks() {
       var filters = [];
       filters.push(['marca',this.getAttribute('id')]);
         localStorage.setItem('home_marca', JSON.stringify(filters)); 
+        // localStorage.setItem('filter_pag', JSON.stringify(filters));
         // console.log(this.getAttribute('id'));
         setTimeout(function(){ 
           window.location.href = 'index.php?page=ctrl_shop&op=list_shop';
@@ -140,6 +141,7 @@ function clicks() {
       var filters = [];
       filters.push(['categoria',this.getAttribute('id')]);//almacenamos carroceria y el atributo en el array
         localStorage.setItem('home_cat', JSON.stringify(filters)); //lo almacenamos 
+        // localStorage.setItem('filter_pag', JSON.stringify(filters));
         // console.log(this.getAttribute('id'));
         setTimeout(function(){ 
           window.location.href = 'index.php?page=ctrl_shop&op=list_shop';//redireccionamos a shop
@@ -152,6 +154,8 @@ function clicks() {
       var filters = [];
       filters.push(['cod_combustible',this.getAttribute('id')]);
         localStorage.setItem('home_comb', JSON.stringify(filters)); 
+        // localStorage.setItem('filter_pag', JSON.stringify(filters));
+
         // console.log(this.getAttribute('id'));
         setTimeout(function(){ 
           window.location.href = 'index.php?page=ctrl_shop&op=list_shop';
@@ -165,6 +169,8 @@ function clicks() {
       var filters = [];
       filters.push(['carroceria',this.getAttribute('id')]);
         localStorage.setItem('home_carro', JSON.stringify(filters)); 
+        // localStorage.setItem('filter_pag', JSON.stringify(filters));
+
         // console.log(this.getAttribute('id'));
         setTimeout(function(){ 
           window.location.href = 'index.php?page=ctrl_shop&op=list_shop';

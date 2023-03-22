@@ -164,14 +164,14 @@ class DAO_shop
 		function count_pagination($filter){
 			// echo json_encode($filter);
 			// exit;
+			// return $filter;
 			$consulta = "SELECT COUNT(c.id_car) n_prod
 					FROM (SELECT c.id_car,c.km,c.num_matricula,c.cod_combustible,c.categoria,c.observaciones,c.puertas,c.precio,c.cod_etiqueta,c.f_mat,c.color,c.city,c.cod_modelo,m.descripcion modelo, f.img_car,  
 					co.descripcion combustible, m.cod_marca marca,carr.descripcion carroceria,c.lon,c.lat,c.visitas
 					FROM car c INNER JOIN fotos f INNER JOIN categoria ca INNER JOIN combustible co INNER JOIN modelo m INNER JOIN carroceria carr
 					ON c.num_bastidor = f.num_bastidor AND f.img_car LIKE '%\pr-%' AND c.categoria = ca.cod_categoria AND c.cod_combustible = co.cod_combustible 
 					AND c.cod_modelo =m.cod_modelo AND c.carroceria= carr.cod_carroceria) AS c";
-			echo json_encode($consulta);
-			// exit;
+			
 		for ($i = 0; $i < count($filter); $i++) {
 			if ($i == 0) {
 				if ($filter[$i][0] == 'order'){
@@ -189,8 +189,6 @@ class DAO_shop
 				}
 			}
 		}
-		// echo json_encode($consulta);
-		// exit;
 
 		$conexion = connect::con();
 		$res = mysqli_query($conexion, $consulta);

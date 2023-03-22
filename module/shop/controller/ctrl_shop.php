@@ -91,7 +91,7 @@
 	// exit;   
 				$homeQuery = new DAO_shop();
 				$selSlide = $homeQuery -> count_pagination($_POST['filter']);
-				echo json_encode($selSlide);
+				// echo json_encode($selSlide);
 				if (!empty($selSlide)) {
 					echo json_encode($selSlide);
 				}

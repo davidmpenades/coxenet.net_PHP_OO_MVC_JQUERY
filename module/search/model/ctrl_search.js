@@ -125,6 +125,7 @@ function button_search() {
         if (search.length != 0) {
             console.log(search);
             localStorage.setItem('filters_search', JSON.stringify(search));
+            localStorage.setItem('filter_pag', JSON.stringify(search));
         }
         window.location.href = 'index.php?page=ctrl_shop&op=list_shop';
     });
