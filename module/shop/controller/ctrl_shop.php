@@ -159,15 +159,13 @@
         $marca = $_POST['marca'];
 		// echo json_encode($marca);
 		// exit;
-        $total =  $_POST['total_items'];
-		// echo json_encode($total);
-		// exit;
+        
         $items =  $_POST['items'];
 		// echo json_encode($items);
 		// exit;
         try {
             $dao = new DAO_Shop();
-            $rdo = $dao->select_cars_related($marca, $total, $items);
+            $rdo = $dao->select_cars_related($marca, $items);
         } catch (Exception $e) {
             echo json_encode("error");
             exit;

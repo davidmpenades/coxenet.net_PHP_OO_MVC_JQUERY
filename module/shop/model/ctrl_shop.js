@@ -19,23 +19,25 @@ function ajaxForSearch(url, filter, total_prod, items) {
             .attr({ id: data[row].id_car })
             .appendTo("#all_cars")
             .html(
+              "<br>" +
               "<div class='container mt-5 mb-5'>" +
                 "<div class='d-flex justify-content-center row'>" +
                 "<div class='col-md-10'>" +
-                "<div class='row p-2 bg-white border rounded mt-2'>" +
+                "<div class='row p-2 bg-white border rounded mt-2'>" +                
                 "<div class='col-md-3 mt-1'><img class='img-fluid img-responsive rounded product-image' src=" +
                 data[row].img_car +
                 "></div>" +
                 "<div class='col-md-6 mt-1'>" +
                 "<h3>" +
-                data[row].marca +
-                " " +
-                data[row].modelo +
+                "Marca: " + data[row].marca +
+                "<br> " +
+                "Modelo: " + data[row].modelo +
                 "</h3>" +
               "<div class='d-flex flex-row'>" +
-              "<h3>" +
-                data[row].categoria + " , " + data[row].observaciones +
-                "</h3>" +
+              "<h4>" +
+              "Estado: "+ data[row].nombre_cat + "<br>" +
+              "Observaciones: " + data[row].observaciones +
+                "</h4>" +
                 "</div>" +
                 "</div>" +
                 "<div class='align-items-center align-content-center col-md-3 border-left mt-1'>" +
@@ -52,6 +54,8 @@ function ajaxForSearch(url, filter, total_prod, items) {
                 "</div>" +
                 "</div>" +
                 "</div>" +
+                "<br>" +
+                "__________________________________________________________________________________________________________________________________________________"+
                 "<br>"
             );
         }
@@ -229,8 +233,8 @@ function loadDetails(id_car) {
             "</b></h3>" +
             "<p>Este vehículo tiene 2 años de garantia</p>" +
             "<div class='buttons_details'>" +
-            "<a class='button add' href='#'>Add to Cart</a>" +
-            "<a class='button buy' href='#'>Buy</a>" +
+            "<a class='button add' href='#'>Añadir al carrito</a>" +
+            "<a class='button buy' href='#'>Comprar</a>" +
             "<span class='button' id='price_details'>" +
             data[0].precio +
             "€" +
@@ -284,14 +288,15 @@ function more_cars_related(marca) {
             console.log('error total_items');
         });
 }
-function cars_related(items, marca, total_items) {
+function cars_related(items = 0, marca, total_items) {
   // console.log(marca);
+  
 
-    ajaxPromise("module/shop/controller/ctrl_shop.php?op=cars_related", 'POST', 'JSON', { 'marca': marca, 'total_items': total_items, 'items': items })
+    ajaxPromise("module/shop/controller/ctrl_shop.php?op=cars_related", 'POST', 'JSON', { 'marca': marca, 'items': items })
       .then(function (data) {
-        console.log(data.length);
-        $('.title_content').empty();
-        
+        console.log(data);
+        // $('.title_content').empty();
+        if(data != 'error'){
            if (items === total_items-1) {
                     $('<button class="no-results" id="">No hay mas coches disponibles....</button></br>').appendTo('.title_content');
                 } else {
@@ -299,18 +304,50 @@ function cars_related(items, marca, total_items) {
                 }
 
                 for (i = 0; i < data.length; i++) {
-                    $('<div></div>').attr({ id: data[i].id_car, class: 'title_content' }).appendTo('.results')
+                    $('<div></div>').attr({ id: data[i].id_car}).appendTo('.results')
                         .html(
-                               "<li class='portfolio-item'>" +
-                                "<div class='item-main'>" +
-                                "<div class='portfolio-image'>" +
-                                "<img src = " + data[i].img_car + " alt='imagen car' </img> " +
-                                "</div>" +
-                                "<h5>" + data[i].cod_marca + "  " + data[i].cod_modelo + "</h5>" +
-                                "</div>" +
-                                "</li>"
+                          "<br>" +
+                          "<div class='container mt-5 mb-5'>" +
+                            "<div class='d-flex justify-content-center row'>" +
+                            "<div class='col-md-10'>" +
+                            "<div class='row p-2 bg-white border rounded mt-2'>" +
+                            "<div class='col-md-3 mt-1'><img class='img-fluid img-responsive rounded product-image' src=" +
+                            data[i].img_car +
+                            "></div>" +
+                            "<div class='col-md-6 mt-1'>" +
+                            "<h3>" +
+                            "Marca; " +"<b>" + data[i].cod_marca + "</b>" +
+                            "<br> " +
+                            "Modelo: " + data[i].descripcion +
+                            "</h3>" +
+                          "<div class='d-flex flex-row'>" +
+                          "<h4>" +
+                            "Estado: " + data[i].nombre_cat + 
+                            "<br>" + 
+                            "Observaciones: " + data[i].observaciones +
+                            "</h4>" +
+                            "</div>" +
+                            "</div>" +
+                            "<div class='align-items-center align-content-center col-md-3 border-left mt-1'>" +
+                            "<div class=d-flex flex-row align-items-center'>" +
+                            "<h4 class='mr-1'>" +
+                            data[i].precio +
+                            "€" +
+                            "</h4>" +
+                            "<button id='" +
+                            data[i].id_car +
+                            "' class='more_info_list button-info' >Mas informacion</button>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>" +
+                            "<br>" +
+                            "_______________________________________________________________________________________________________________________________________________" +
+                            "<br>"
                         );
                 }
+          }
         }).catch(function() {
             console.log("error pero paciencia");
         });
@@ -355,7 +392,7 @@ function load_pagination() {
 function print_filters() {
   $('<div class="div-filters"></div>').appendTo(".filters")
     .html(
-        
+        '<br>' +
         '<label for="combustible"> Combustible: </label>' +
         "    " +
         '<select class="filter_combustible">' +
@@ -427,7 +464,8 @@ function print_filters() {
         "</div >" +
         "</div > " +
         "</div>" +
-        "</div>" 
+        "</div>" +
+        '<br>'
         
     );
 }

@@ -9,15 +9,14 @@ class DAO_shop
 		// exit;
 
 		$sql = "SELECT c.id_car,m.cod_marca marca,c.km,c.puertas,c.color,c.city ciudad,c.f_mat,m.descripcion modelo, c.num_matricula, c.precio,c.observaciones,f.img_car,
-		        ca.descripcion carroceria,cat.nombre_cat categoria,ci.descripcion cilindrada,e.descripcion etiqueta,c.lon,c.lat
+		        ca.descripcion carroceria,cat.nombre_cat,ci.descripcion cilindrada,e.descripcion etiqueta,c.lon,c.lat
                 FROM car c, modelo m,fotos f,carroceria ca,categoria cat,cilindrada ci,combustible co,etiqueta e
                 WHERE c.cod_modelo=m.cod_modelo AND c.num_bastidor=f.num_bastidor AND f.img_car like '%\pr-%' 
 				AND c.carroceria=ca.cod_carroceria AND c.categoria=cat.cod_categoria AND c.cod_combustible=co.cod_combustible
 				AND c.cod_cil=ci.cod_cilindrada AND c.cod_etiqueta=e.cod_etiqueta ORDER BY c.visitas DESC
 				LIMIT $total_prod,$items_page;";
+				// return $sql;
 		$connection = connect::con();
-		// echo json_encode($sql);
-		// exit;
 		$res = mysqli_query($connection, $sql);
 		connect::close($connection);
 
@@ -202,16 +201,16 @@ class DAO_shop
 		}
 		return $retrArray;
 		}
-		function select_cars_related($marca, $total, $items){
+		function select_cars_related($marca, $items){
 		// echo json_encode($marca);
 		// echo json_encode($total);
 		// echo json_encode($items);
 		// exit;
-		$sql = "SELECT * 
-				FROM car c, modelo m
-				WHERE c.cod_modelo = m.cod_modelo 
+		$sql = "SELECT *,m.descripcion, ca.nombre_cat
+		FROM car c, modelo m, categoria ca
+		WHERE c.cod_modelo = m.cod_modelo AND c.categoria = ca.cod_categoria 
 				AND m.cod_marca = '$marca'
-				LIMIT $items, $total;";
+				LIMIT $items,3;";
 		// echo json_encode($sql);
 		// exit;
 		$conexion = connect::con();
