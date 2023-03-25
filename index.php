@@ -10,8 +10,10 @@
 	}elseif ((isset($_GET['page'])) && ($_GET['page']==="ctrl_shop") ){
 
 		include("view/inc/top_page_shop.php");
-	}
-	else{
+	}elseif ((isset($_GET['page'])) && ($_GET['page']==="ctrl_login") ){
+
+		include("view/inc/top_page_login_register.php");
+	}else{
 		include("view/inc/top_page.php");
 	}
 	

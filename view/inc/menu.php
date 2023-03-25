@@ -10,7 +10,7 @@
                 </button>
                 <a class="navbar-brand" href="#"><img src="view/img/header.jpg"  height="50"></a><br>
             </div>
-           
+            
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="index.php?page=ctrl_home&op=list">HOME</a></li>   
@@ -19,10 +19,11 @@
                     <li><a href="index.php?page=services">Servicios</a></li>
                     <li><a href="index.php?page=aboutus">Conocenos</a></li>
                     <li><a href="index.php?page=contactus">Contacto</a></li>
+                    <li><a href="index.php?page=ctrl_login&op=login-register_view">REGISTER-LOGIN</a></li>
                 </ul>
             </div>
         </div><br>
-
+        
         <div class="container bg-white pt-3 px-lg-5 d-flex justify-content-center">
             <div class="row mx-n2">
                 <div class="col-xl-3 col-lg-3 col-md-6 px-2">
@@ -40,7 +41,6 @@
                 </div>
             </div>
         </div>
-
     </div>
    <!--/.NAVBAR END-->
     

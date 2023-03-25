@@ -10,8 +10,8 @@ if(isset($_GET['page'])){
 		case "ctrl_shop";
 		    include("module/shop/controller/".$_GET['page'].".php");
 			break;
-		case "controller_cars";
-			include("module/cars/controller/".$_GET['page'].".php");
+		case "ctrl_login";
+			include("module/login/ctrl/".$_GET['page'].".php");
 			break;
 		case "services";
 			include("module/services/".$_GET['page'].".html");
