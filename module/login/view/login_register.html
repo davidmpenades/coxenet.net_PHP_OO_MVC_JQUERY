@@ -1,0 +1,111 @@
+<!-- <html>
+<head>
+    <link href="module/login/view/login.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    
+    <div class="login-wrap">
+        <div class="login-html">
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">LOGIN</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">REGISTRO</label>
+            <div class="login-form">
+                <form id="login__form" method="POST">
+                    <div class="sign-in-htm">
+                        <div class="group">
+                            <label for="user" class="label">Username</label>
+                            <input id="username_log" type="text" class="input" name="username_log">
+                            <span id="error_username_log" class="error"></span>
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Password</label>
+                            <input id="passwd_log" type="password" class="input" name="passwd_log">
+                            <span id="error_passwd_log" class="error"></span>
+
+                        </div>
+                        <div class="group">
+                            <input type="submit" id="login" class="button" value="Sign In">
+                        </div>
+                        <div class="hr"></div>
+                        <div class="foot-lnk">
+                            <label for="tab-2">You don't have an account? </label>
+                        </div>
+                    </div>
+                </form>
+
+                <form id="register__form" method="post">
+                    <div class="sign-up-htm">
+                        <div class="group">
+                            <label for="user" class="label">Nombre de Usuario</label>
+                            <input id="username_reg" type="text" class="input" name="username_reg">
+                            <span id="error_username_reg" class="error"></span>
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Password</label>
+                            <input id="passwd1_reg" type="password" class="input" name="passwd1_reg">
+                            <span id="error_passwd1_reg" class="error"></span>
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Repite Password</label>
+                            <input id="passwd2_reg" type="password" class="input" name="passwd2_reg">
+                            <span id="error_passwd2_reg" class="error"></span>
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Direccion de Email</label>
+                            <input id="email_reg" type="email" class="input" name="email_reg">
+                            <span id="error_email_reg" class="error"></span>
+                        </div>
+                        <div class="group">
+                            <input type="submit" id="register" class="button" value="REGISTRAR">
+                        </div>
+                        <div class="hr"></div>
+                        <div class="foot-lnk">
+                            <label for="tab-1">Already Member?</label>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slide Navbar</title>
+	<link rel="stylesheet" type="text/css" href="module\login\view\login.css">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+	<div style="margin-left: 36%; margin-top: 40%;" class="main" >  	
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+			<div class="signup">
+				<form  id="register__form" method="post">
+					<label for="chk" aria-hidden="true">Registro</label>                    					
+                    <input for="user" id="username_reg" type="text" class="input" name="username_reg" placeholder="Nombre Usuario" >
+                    <span id="error_username_reg" class="error"></span>
+                    <input for="pass" id="email_reg" type="email" class="input" name="email_reg" placeholder="Email">
+                    <span  id="error_email_reg" class="error"></span>
+                    <input for="pass" id="passwd1_reg" type="password" class="input" name="passwd1_reg" placeholder="Password">
+                    <span id="error_passwd1_reg" class="error"></span>
+                    <input for="pass" id="passwd2_reg" type="password" class="input" name="passwd2_reg" placeholder=" Repite Password">
+                    <span  id="error_passwd2_reg" class="error"></span>					
+                    <input type="submit" id="register" class="button" value="REGISTRAR" style="padding: 2px;box-sizing: content-box; background-color: green;">
+                </form>
+			</div>
+
+			<div class="login">
+				<form id="login__form" method="POST">
+					<label id="jump" for="chk" aria-hidden="true">Login</label>
+                    <input id="username_log" type="text" class="input" name="username_log" placeholder="Nombre de Usuario">
+                    <span id="error_username_log" class="error"></span>
+                    <input id="passwd_log" type="password" class="input" name="passwd_log" placeholder="Password">
+                    <span style="background-color: red;" id="error_passwd_log" class="error"></span>
+                    <input style="padding: 4px;box-sizing: content-box; background-color: green;" type="submit" id="login" class="button" value="Entrar">
+                </form>
+			</div>
+	</div>
+</body>
+</html>
