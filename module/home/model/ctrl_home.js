@@ -207,23 +207,15 @@ function loadSugerencias() {
                 for (i = 0; i < limit; i++) {
                     $('<div></div>').attr({ id: 'books_car', class: 'books_car' }).appendTo('.containerbooks')
                         .html(
-                            '<div class="col-md-4 col-sm-4 col-xs-12">' +
-                            '<div class="panel panel-danger adjust-border-radius">' +
-                            '<div class="title_book panel-heading adjust-border">' +
-                            '<h4>' + data.items[i].volumeInfo.title + '</h4>' +
-                            '</div>' +
-                            '<div class="panel-body">' +
-                            '<ul class="plan">' +
-                            '<li class="Img_new"><img src=' + data.items[i].volumeInfo.imageLinks.thumbnail + '</li>' +
-                            '<li><i id="col-ico" class="fa-solid fa-user-large fa-sm"></i>&nbsp;&nbsp;' + data.items[i].volumeInfo.authors[0] + '</li>' +
-                            '<li><i id="col-ico" class="fa-solid fa-calendar-days fa-sm"></i>&nbsp;&nbsp;' + data.items[i].volumeInfo.publishedDate + '</li>' +
-                            '</ul>' +
-                            '</div>' +
-                            '<div class="panel-footer">' +
+                        '<div  style="border: 1px solid black; display: flex; align-items: auto;">' +
+                        '<img src="' + data.items[i].volumeInfo.imageLinks.thumbnail + '" +  alt="example image" style="flex: 1; width: 30%; margin-right: 1rem;">' +
+                        '<div style="flex: 1;">' +
+                            '<h2 style="font-size: 1.5rem; margin-bottom: 1rem;">' + data.items[i].volumeInfo.title + '</h2>' +
+                            '<p style="margin-bottom: 1rem;">' +data.items[i].volumeInfo.publishedDate + '</p>' +
                             '<a href=' + data.items[i].volumeInfo.infoLink + ' target="_blank" class="btn btn-danger btn-block btn-lg adjust-border-radius">MORE INFO</a>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>'
+                        '</div>' +
+                        '</div>' +
+                        '<br>'
                         );
                 }
             }).catch(function() {
@@ -244,24 +236,16 @@ function getSugerencias() {
             for (i = 0; i < data.items.length; i++) {
                 $('<div></div>').attr({ id: 'books_car', class: 'books_car' }).appendTo('.containerbooks')
                     .html(
-                        '<div class="col-md-4 col-sm-4 col-xs-12">' +
-                        '<div class="panel panel-danger adjust-border-radius">' +
-                        '<div class="title_book panel-heading adjust-border">' +
-                        '<h4>' + data.items[i].volumeInfo.title + '</h4>' +
-                        '</div>' +
-                        '<div class="panel-body">' +
-                        '<ul class="plan">' +
-                        '<li class="Img_new" ><img src="' + data.items[i].volumeInfo.imageLinks.thumbnail + '"</li>' +
-                        '<li><i id="col-ico" class="fa-solid fa-user-large fa-sm"></i>&nbsp;&nbsp;' + data.items[i].volumeInfo.authors[0] + '</li>' +
-                        '<li><i id="col-ico" class="fa-solid fa-calendar-days fa-sm"></i>&nbsp;&nbsp;' + data.items[i].volumeInfo.publishedDate + '</li>' +
-                        '</ul>' +
-                        '</div>' +
-                        '<div class="panel-footer">' +
-                        '<a href=' + data.items[i].volumeInfo.infoLink + ' target="_blank" class="btn btn-danger btn-block btn-lg adjust-border-radius">MORE INFO</a>' +
+                        '<div  style="border: 1px solid black; display: flex; align-items: auto;">' +
+                        '<img src="' + data.items[i].volumeInfo.imageLinks.thumbnail + '" +  alt="example image" style="flex: 1; width: 200px; margin-right: 1rem;">' +
+                        '<div style="flex: 1;">' +
+                            '<h2 style="font-size: 1.5rem; margin-bottom: 1rem;">' + data.items[i].volumeInfo.title + '</h2>' +
+                            '<p style="margin-bottom: 1rem;">' +data.items[i].volumeInfo.publishedDate + '</p>' +
+                            '<a href=' + data.items[i].volumeInfo.infoLink + ' target="_blank" class="btn btn-danger btn-block btn-lg adjust-border-radius">MORE INFO</a>' +
                         '</div>' +
                         '</div>' +
-                        '</div>'
-                    );
+                        '<br>'
+                        );
             }
         }).catch(function() {
             // window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=News cars HOME";
