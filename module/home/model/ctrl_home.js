@@ -179,7 +179,6 @@ function clicks() {
         // //visitas_________________________________________
     $(document).on("click", '.click_visitas', function () {
       localStorage.removeItem("filter");//borramos los filtros
-    // console.log($('.click_carro').attr('id'));
       var filters = [];
       filters.push(['cod_modelo',this.getAttribute('id')]);
         localStorage.setItem('homevisitas', JSON.stringify(filters)); 
@@ -252,7 +251,7 @@ function getSugerencias() {
                         '</div>' +
                         '<div class="panel-body">' +
                         '<ul class="plan">' +
-                        '<li class="Img_new"><img src="' + data.items[i].volumeInfo.imageLinks.thumbnail + '"</li>' +
+                        '<li class="Img_new" ><img src="' + data.items[i].volumeInfo.imageLinks.thumbnail + '"</li>' +
                         '<li><i id="col-ico" class="fa-solid fa-user-large fa-sm"></i>&nbsp;&nbsp;' + data.items[i].volumeInfo.authors[0] + '</li>' +
                         '<li><i id="col-ico" class="fa-solid fa-calendar-days fa-sm"></i>&nbsp;&nbsp;' + data.items[i].volumeInfo.publishedDate + '</li>' +
                         '</ul>' +

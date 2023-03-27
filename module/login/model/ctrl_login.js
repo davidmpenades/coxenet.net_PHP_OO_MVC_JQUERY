@@ -124,27 +124,29 @@ function validate_register() {
         return 0;
     }
 }
-//////////////////////////LOGIN//////////////////////////////////////////////////////////////7
+//////////////////////////LOGIN//////////////////////////////////////////////////////////////
 function login() {
-    console.log("hola login");
+    // console.log("hola login");
     if (validate_login() != 0) {
-        console.log(validate_login);
+        // console.log(validate_login);
         var data = $('#login__form').serialize();
+        // console.log(data);
         ajaxPromise('module/login/ctrl/ctrl_login.php?op=login', 'POST', 'JSON', data)
             .then(function(result) {
-                console.log(data);
+                console.log(result);
                 if (result == "error_user") {
                     document.getElementById('error_username_log').innerHTML = "El usario no existe,asegurase de que lo a escrito correctamente"
                 } else if (result == "error_passwd") {
                     document.getElementById('error_passwd_log').innerHTML = "La contraseña es incorrecta"
                 } else {
-                    localStorage.setItem("token", result);
+                    // localStorage.setItem("token", result);
                     toastr.success("Loged succesfully");
-
                     if (localStorage.getItem('redirect_like')) {
-                        setTimeout(' window.location.href = "index.php?module=ctrl_shop&op=list"; ', 1000);
+                        console.log("hola redirect");
+                        setTimeout(' window.location.href = "index.php?page=ctrl_shop&op=list_shop"; ', 1000);
                     } else {
-                        setTimeout(' window.location.href = "index.php?module=ctrl_home&op=list"; ', 1000);
+                        
+                        setTimeout(' window.location.href = "index.php?page=ctrl_home&op=list"; ', 1000);
                     }
                 }
             }).catch(function(textStatus) {
@@ -166,7 +168,7 @@ function key_login() {
 }
 
 function button_login() {
-    console.log("hola button");
+    // console.log("hola button");
     $('#login').on('click', function(e) {
         e.preventDefault();
         login();
@@ -174,7 +176,7 @@ function button_login() {
 }
 
 function validate_login() {
-    console.log("hola validate_login");
+    // console.log("hola validate_login");
     var error = false;
 
     if (document.getElementById('username_log').value.length === 0) {

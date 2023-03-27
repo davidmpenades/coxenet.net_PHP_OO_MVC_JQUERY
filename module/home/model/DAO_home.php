@@ -38,7 +38,7 @@
 		}
 
 		function select_type_motor() {
-			$sql= "SELECT *FROM combustible ORDER BY cod_combustible DESC";
+			$sql= "SELECT * FROM combustible ORDER BY cod_combustible DESC";
 
 			$conexion = connect::con();
 			$res = mysqli_query($conexion, $sql);

@@ -75,18 +75,29 @@ switch ($_GET['op']) {
         try {
             $daoLog = new DAOLogin();
             $rdo = $daoLog->seleccionar_usuario($_POST['username_log']);
-
+            // echo json_encode($rdo);
+            // exit;
             if ($rdo == "error_user") {
                 echo json_encode("error_user");
                 exit;
             } else {
-                if (password_verify($_POST['passwd_log'], $rdo['password'])) {
-                    // $token= create_token($rdo["username"]);
-                    $_SESSION['username'] = $rdo['username']; //Guardamos el usario 
-                    $_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
-                    echo json_encode($token);
+            // $hash_pass = password_hash($_POST['passwd_log'], PASSWORD_DEFAULT, ['cost' => 12]);
+            
+            // $hash_pass =  $_POST['passwd_log'];
+            // $hash_password = password_hash($hash_pass, PASSWORD_DEFAULT, ['cost' => 12]);
+            $password = $_POST['passwd_log'];
+            echo json_encode($password);
                     exit;
-                } else {
+                if (password_verify($password, $rdo['password'])) {
+                    // $token= create_token($rdo["username"]);
+                    // echo json_encode($rdo['password']);
+                    // exit;
+                    $_SESSION['username'] = $rdo['username']; //Guardamos el usuario 
+                    // $_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
+                    // echo json_encode($token);
+                    exit;
+                } 
+                else {
                     echo json_encode("error_passwd");
                     exit;
                 }

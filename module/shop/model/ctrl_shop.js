@@ -55,7 +55,6 @@ function ajaxForSearch(url, filter, total_prod, items) {
                 "</div>" +
                 "</div>" +
                 "<br>" +
-                "__________________________________________________________________________________________________________________________________________________"+
                 "<br>"
             );
         }
@@ -255,8 +254,8 @@ function loadDetails(id_car) {
         dots: "#dots",
         draggable: true,
         arrows: {
-          prev: ".glider-prev",
-          next: ".glider-next",
+        prev: ".glider-prev",
+        next: ".glider-next",
         },
       });
       mapBox(data[0]);
@@ -307,7 +306,7 @@ function cars_related(items = 0, marca, total_items) {
                     $('<div></div>').attr({ id: data[i].id_car}).appendTo('.results')
                         .html(
                           "<br>" +
-                          "<div class='container mt-5 mb-5'>" +
+                          "<div class=' container mt-5 mb-5'>" +
                             "<div class='d-flex justify-content-center row'>" +
                             "<div class='col-md-10'>" +
                             "<div class='row p-2 bg-white border rounded mt-2'>" +
@@ -343,7 +342,6 @@ function cars_related(items = 0, marca, total_items) {
                             "</div>" +
                             "</div>" +
                             "<br>" +
-                            "_______________________________________________________________________________________________________________________________________________" +
                             "<br>"
                         );
                 }
