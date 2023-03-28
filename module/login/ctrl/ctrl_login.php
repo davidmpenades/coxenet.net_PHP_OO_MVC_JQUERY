@@ -75,20 +75,16 @@ switch ($_GET['op']) {
         try {
             $daoLog = new DAOLogin();
             $rdo = $daoLog->seleccionar_usuario($_POST['username_log']);
-            // echo json_encode($rdo);
-            // exit;
+            echo json_encode($rdo);
+            exit;
             if ($rdo == "error_user") {
                 echo json_encode("error_user");
                 exit;
             } else {
-            // $hash_pass = password_hash($_POST['passwd_log'], PASSWORD_DEFAULT, ['cost' => 12]);
             
-            // $hash_pass =  $_POST['passwd_log'];
-            // $hash_password = password_hash($hash_pass, PASSWORD_DEFAULT, ['cost' => 12]);
-            $password = $_POST['passwd_log'];
-            echo json_encode($password);
-                    exit;
-                if (password_verify($password, $rdo['password'])) {
+            $hash_password = password_hash($_POST['passwd_log'], PASSWORD_DEFAULT, ['cost' => 12]);
+            
+                if (password_verify($hash_password, $rdo['password'])) {
                     // $token= create_token($rdo["username"]);
                     // echo json_encode($rdo['password']);
                     // exit;
@@ -102,6 +98,7 @@ switch ($_GET['op']) {
                     exit;
                 }
             }
+               
         } catch (Exception $e) {
             echo json_encode("error");
             exit;
