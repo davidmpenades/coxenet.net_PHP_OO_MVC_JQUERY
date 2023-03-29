@@ -3,7 +3,7 @@ function register() {
     console.log("hola register");
     if (validate_register() != 0) {
         var data = $('#register__form').serialize();
-        console.log(data);
+        // console.log(data);
         ajaxPromise('module/login/ctrl/ctrl_login.php?op=register', 'POST', 'JSON', data)
             .then(function(result) {
                 console.log(result);
@@ -139,15 +139,9 @@ function login() {
                 } else if (result == "error_passwd") {
                     document.getElementById('error_passwd_log').innerHTML = "La contraseña es incorrecta"
                 } else {
-                    // localStorage.setItem("token", result);
+                    localStorage.setItem("token", result);
                     toastr.success("Loged succesfully");
-                    if (localStorage.getItem('redirect_like')) {
-                        console.log("hola redirect");
-                        setTimeout(' window.location.href = "index.php?page=ctrl_shop&op=list_shop"; ', 1000);
-                    } else {
-                        
-                        setTimeout(' window.location.href = "index.php?page=ctrl_home&op=list"; ', 1000);
-                    }
+                    setTimeout(' window.location.href = "index.php?page=ctrl_home&op=list"; ', 1000);
                 }
             }).catch(function(textStatus) {
                 if (console && console.log) {

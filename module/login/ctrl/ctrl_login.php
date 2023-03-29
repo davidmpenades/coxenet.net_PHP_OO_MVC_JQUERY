@@ -1,6 +1,7 @@
 <?php
 $path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
 include($path . "/module/login/model/DAO_login.php");
+include($path . "model/middleware_auth.php");
 session_start();
 
 switch ($_GET['op']) {
@@ -75,22 +76,20 @@ switch ($_GET['op']) {
         try {
             $daoLog = new DAOLogin();
             $rdo = $daoLog->seleccionar_usuario($_POST['username_log']);
-            echo json_encode($rdo);
-            exit;
+            // echo json_encode($rdo);
+            // exit;
             if ($rdo == "error_user") {
                 echo json_encode("error_user");
                 exit;
             } else {
-            
-            $hash_password = password_hash($_POST['passwd_log'], PASSWORD_DEFAULT, ['cost' => 12]);
-            
-                if (password_verify($hash_password, $rdo['password'])) {
-                    // $token= create_token($rdo["username"]);
-                    // echo json_encode($rdo['password']);
+                           
+                if (password_verify($_POST['passwd_log'], $rdo['password'])) {
+                    // echo json_encode($rdo);
+                    $token= create_token($_POST['username_log']);
                     // exit;
-                    $_SESSION['username'] = $rdo['username']; //Guardamos el usuario 
+                    // $_SESSION['username'] = $rdo['username']; //Guardamos el usuario 
                     // $_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
-                    // echo json_encode($token);
+                    echo json_encode($token);
                     exit;
                 } 
                 else {
@@ -113,13 +112,13 @@ switch ($_GET['op']) {
     //     echo json_encode('Done');
     //     break;
 
-    // case 'data_user':
-    //     $json = decode_token($_POST['token']);
-    //     $daoLog = new DAOLogin();
-    //     $rdo = $daoLog->select_data_user($json['username']);
-    //     echo json_encode($rdo);
-    //     exit;
-    //     break;
+    case 'data_user':
+        $json = decode_token($_POST['token']);
+        $daoLog = new DAOLogin();
+        $rdo = $daoLog->select_data_user($json['username']);
+        // echo json_encode($rdo);
+        // exit;
+        break;
 
     // case 'actividad':
     //     if (!isset($_SESSION["tiempo"])) {
