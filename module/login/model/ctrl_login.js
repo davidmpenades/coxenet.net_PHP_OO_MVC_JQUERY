@@ -133,7 +133,7 @@ function login() {
         // console.log(data);
         ajaxPromise('module/login/ctrl/ctrl_login.php?op=login', 'POST', 'JSON', data)
             .then(function(result) {
-                console.log(result);
+                // console.log(result);
                 if (result == "error_user") {
                     document.getElementById('error_username_log').innerHTML = "El usario no existe,asegurase de que lo a escrito correctamente"
                 } else if (result == "error_passwd") {
@@ -141,7 +141,11 @@ function login() {
                 } else {
                     localStorage.setItem("token", result);
                     toastr.success("Loged succesfully");
-                    setTimeout(' window.location.href = "index.php?page=ctrl_home&op=list"; ', 1000);
+                    // setTimeout(' window.location.href = "index.php?page=ctrl_home&op=list"; ', 1000);
+                    window.location.href = "index.php?page=ctrl_home&op=list";
+
+
+
                 }
             }).catch(function(textStatus) {
                 if (console && console.log) {

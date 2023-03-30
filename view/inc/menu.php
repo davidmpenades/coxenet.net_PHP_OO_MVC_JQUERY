@@ -18,8 +18,10 @@
                     <li><a href="index.php?page=controller_cars&op=list">Coches</a></li>
                     <li><a href="index.php?page=services">Servicios</a></li>
                     <li><a href="index.php?page=aboutus">Conocenos</a></li>
-                    <li><a href="index.php?page=contactus">Contacto</a></li>
-                    <li><a href="index.php?page=ctrl_login&op=login-register_view">REGISTER-LOGIN</a></li>
+                    <li><a href="index.php?page=contactus">Contacto</a></li>                    
+                    <li><a  id="button_login" href="index.php?page=ctrl_login&op=login-register_view">REGISTER-LOGIN</a></li>
+                    <li><div id="user_info"></div></li>
+                    <li><div  class="log-icon" ></div></li>                    
                 </ul>
             </div>
         </div><br>

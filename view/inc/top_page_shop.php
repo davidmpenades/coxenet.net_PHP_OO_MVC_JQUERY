@@ -43,8 +43,12 @@
         	});
 	    </script>
 		
-	    <link href="view/assets/css/style.css" rel="stylesheet" type="text/css" />
+        <script src="view/js/utils.js"></script>
+        <script src="view/js/activity_user.js"></script>
+
 	    <script src="module/shop/model/ctrl_shop.js"></script>
+	    <link href="view/assets/css/style.css" rel="stylesheet" type="text/css" />
+
         <!-- search -->
          <script src="module/search/model/ctrl_search.js"></script>
         <link href="view/Glider/glider.css" rel="stylesheet" type="text/css" />
@@ -52,7 +56,6 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 		<!-- carrguem la llibreria de utils propia -->
 		<script src="view/assets/js/custom.js"></script>
-        <script src="view/js/utils.js"></script>
         <script src="view/Glider/glider.js"></script>
         <!-- maps -->
         <script src='https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js'></script>

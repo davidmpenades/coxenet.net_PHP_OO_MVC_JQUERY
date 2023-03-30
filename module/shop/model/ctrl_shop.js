@@ -3,7 +3,6 @@ function ajaxForSearch(url, filter, total_prod, items) {
   ajaxPromise(url, "POST", "JSON", { 'filter': filter, 'total_prod': total_prod,'items':items })
     .then(function (data) {
       console.log(data);
-
       $("#all_cars").empty();
       if (filter === "error") {
         
@@ -72,7 +71,7 @@ function ajaxForSearch(url, filter, total_prod, items) {
 function loadListCar(total_prod=0,items=3) {
   //filtro contiene el valor de filter almacenado en localstorage, con .getitem lo recogemos
   //parse, elimina el encapsulado del stringify
-    // console.log(filter);
+  // console.log(filter);
   
   var filtro = JSON.parse(localStorage.getItem("filter")) || false;
   var home_carro = JSON.parse(localStorage.getItem("home_carro")) || false;

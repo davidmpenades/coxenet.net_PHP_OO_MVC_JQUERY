@@ -1,7 +1,10 @@
 <?php
 	$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
 	include ($path . '/module/shop/model/DAO_shop.php');
-
+	@session_start();
+	if (isset($_SESSION["tiempo"])) {  
+		$_SESSION["tiempo"] = time(); //Devuelve la fecha actual
+	}
 	switch ($_GET['op']) {
 	    case 'list_shop':
 		    // echo json_encode("hola lista ");

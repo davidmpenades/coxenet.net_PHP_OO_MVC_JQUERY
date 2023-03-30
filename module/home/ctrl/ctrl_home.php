@@ -1,15 +1,15 @@
 <?php
     $path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
     include($path . "/module/home/model/DAO_home.php");
-    session_start();
-
+    @session_start();
+    if (isset($_SESSION["tiempo"])) {  
+    $_SESSION["tiempo"] = time(); //Devuelve la fecha actual
+    }
     switch ($_GET['op']) {
         case 'list';
             include ('module/home/view/home.html');
         break;
         case 'Carrousel_Brand';
-
-         
             try{
                 $daohome = new DAO_Home();
                 $SelectBrand = $daohome->select_brand();

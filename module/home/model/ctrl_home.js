@@ -1,3 +1,4 @@
+
 function carousel_Brands() {
     ajaxPromise('module/home/ctrl/ctrl_home.php?op=Carrousel_Brand','GET', 'JSON')
     .then(function(data) {
@@ -207,8 +208,8 @@ function loadSugerencias() {
                 for (i = 0; i < limit; i++) {
                     $('<div></div>').attr({ id: 'books_car', class: 'books_car' }).appendTo('.containerbooks')
                         .html(
-                        '<div  style="border: 1px solid black; display: flex; align-items: auto;">' +
-                        '<img src="' + data.items[i].volumeInfo.imageLinks.thumbnail + '" +  alt="example image" style="flex: 1; width: 30%; margin-right: 1rem;">' +
+                        '<div  style="border: 1px solid black; display: flex; align-items: auto;margin-left:30%">' +
+                        '<img src="' + data.items[i].volumeInfo.imageLinks.thumbnail + '" +  alt="example image" style="flex: 1; margin-right: 1rem;" height: 50vw;>' +
                         '<div style="flex: 1;">' +
                             '<h2 style="font-size: 1.5rem; margin-bottom: 1rem;">' + data.items[i].volumeInfo.title + '</h2>' +
                             '<p style="margin-bottom: 1rem;">' +data.items[i].volumeInfo.publishedDate + '</p>' +
@@ -236,8 +237,8 @@ function getSugerencias() {
             for (i = 0; i < data.items.length; i++) {
                 $('<div></div>').attr({ id: 'books_car', class: 'books_car' }).appendTo('.containerbooks')
                     .html(
-                        '<div  style="border: 1px solid black; display: flex; align-items: auto;">' +
-                        '<img src="' + data.items[i].volumeInfo.imageLinks.thumbnail + '" +  alt="example image" style="flex: 1; width: 200px; margin-right: 1rem;">' +
+                        '<div  style="border: 1px solid black; display: flex; align-items: auto;margin-left:30%">' +
+                        '<img src="' + data.items[i].volumeInfo.imageLinks.thumbnail + '" +  alt="example image" style="flex: 1; margin-right: 1rem;"height: 50vw;>' +
                         '<div style="flex: 1;">' +
                             '<h2 style="font-size: 1.5rem; margin-bottom: 1rem;">' + data.items[i].volumeInfo.title + '</h2>' +
                             '<p style="margin-bottom: 1rem;">' +data.items[i].volumeInfo.publishedDate + '</p>' +

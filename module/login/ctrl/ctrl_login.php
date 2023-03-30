@@ -2,8 +2,10 @@
 $path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
 include($path . "/module/login/model/DAO_login.php");
 include($path . "model/middleware_auth.php");
-session_start();
-
+@session_start();
+if (isset($_SESSION["tiempo"])) {  
+    $_SESSION["tiempo"] = time(); //Devuelve la fecha actual
+ }
 switch ($_GET['op']) {
     
     case 'login-register_view';
@@ -104,20 +106,24 @@ switch ($_GET['op']) {
         }
         break;
 
-    // case 'logout':
-    //     unset($_SESSION['username']);
-    //     unset($_SESSION['tiempo']);
-    //     session_destroy();
+    case 'logout':
+        unset($_SESSION['username']);
+        // unset($_SESSION['tiempo']);
+        session_destroy();
 
-    //     echo json_encode('Done');
-    //     break;
+        echo json_encode('Done');
+        break;
 
     case 'data_user':
+        // echo json_encode('hola');
+        // exit;
         $json = decode_token($_POST['token']);
+        // echo json_encode($json);
+        // exit;
         $daoLog = new DAOLogin();
         $rdo = $daoLog->select_data_user($json['username']);
-        // echo json_encode($rdo);
-        // exit;
+        echo json_encode($rdo);
+        exit;
         break;
 
     // case 'actividad':

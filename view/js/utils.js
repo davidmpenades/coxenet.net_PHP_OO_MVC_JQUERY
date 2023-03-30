@@ -1,4 +1,3 @@
-// console.log("hola miguel")
 function ajaxPromise(sUrl, sType, sTData, sData = undefined) {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -15,11 +14,15 @@ function ajaxPromise(sUrl, sType, sTData, sData = undefined) {
 }
 //================LOAD-HEADER================
 function load_menu() {
+// console.log('hola1');
+
     var token = localStorage.getItem('token');
+    // console.log(token);
     if (token) {
+        console.log(token);
         ajaxPromise('module/login/ctrl/ctrl_login.php?op=data_user', 'POST', 'JSON', { 'token': token })
             .then(function(data) {
-                console.log(data);
+                // console.log(data);
                 // if (data.type_user == "client") {
                 //     console.log("Client loged");
                 //     $('.opc_CRUD').empty();
@@ -29,15 +32,20 @@ function load_menu() {
                 //     $('.opc_CRUD').show();
                 //     $('.opc_exceptions').show();
                 // }
-                // $('.log-icon').empty();
-                // $('#user_info').empty();
-                // $('<img src="' + data.avatar + '"alt="Robot">').appendTo('.log-icon');
-                // $('<p></p>').attr({ 'id': 'user_info' }).appendTo('#des_inf_user')
-                //     .html(
-                //         '<a id="logout"><i id="icon-logout" class="fa-solid fa-right-from-bracket"></i></a>' +
-                //         '<a>' + data.username + '<a/>'
-
-                //     )
+        
+                    // Si el token existe en localStorage, mostrar los divs para usuario logueado
+                    $('#button_login').hide();
+                    $('#button_login').empty();
+                    $('.log-icon').empty();
+                    $('#user_info').empty();
+                    $('<img style="width:40px; border-radius:6px" src="' + data.avatar + '"alt="Robot">').appendTo('.log-icon');
+                    $('<p></p>').attr({ 'id': 'user_info' }).appendTo('#user_info')
+                        .html(
+                            '<a>' + data.username + '<a/>'  +
+                            '<a id="logout"><i class="fa fa-sign-out">LOGOUT</i></a>'                                                       
+                        );
+                  
+                  
 
             }).catch(function() {
                 console.log("Error al cargar los datos del user");
@@ -46,6 +54,7 @@ function load_menu() {
         console.log("No hay token disponible");
         $('.opc_CRUD').empty();
         $('.opc_exceptions').empty();
+        $('#user_info').empty();
         $('#user_info').hide();
         $('.log-icon').empty();
         $('<a href="index.php?module=ctrl_login&op=login-register_view"><i id="col-ico" class="fa-solid fa-user fa-2xl"></i></a>').appendTo('.log-icon');
@@ -67,7 +76,7 @@ function logout() {
     ajaxPromise('module/login/ctrl/ctrl_login.php?op=logout', 'POST', 'JSON')
         .then(function(data) {
             localStorage.removeItem('token');
-            window.location.href = "index.php?module=ctrl_home&op=list";
+            setTimeout(' window.location.href = "index.php?page=ctrl_home&op=list"; ', 1000);
         }).catch(function() {
             console.log('Something has occured');
         });
@@ -82,7 +91,10 @@ function click_shop() {
 }
 
 $(document).ready(function() {
-    load_menu();
-    // click_logout();
+    // console.log('hola');
+    // load_menu();
+    setTimeout('load_menu(); ', 1000);
+
+    click_logout();
     // click_shop();
 });

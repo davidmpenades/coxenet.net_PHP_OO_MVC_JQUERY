@@ -43,7 +43,9 @@
 		
 	    <link href="view/assets/css/style.css" rel="stylesheet" type="text/css" />
         <link href="view/assets/css/Home_cards.css" rel="stylesheet" type="text/css" />
-        
+
+        <script src="view/js/utils.js"></script>
+        <script src="view/js/activity_user.js"></script>
 	    <script src="module/home/model/ctrl_home.js"></script>
         <!-- search -->
          <script src="module/search/model/ctrl_search.js"></script>
@@ -51,7 +53,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 		<!-- carrguem la llibreria de utils propia -->
 		<script src="view/assets/js/custom.js"></script>
-        <script src="view/js/utils.js"></script>
+        
         <script src="view/Glider/glider.js"></script>
         <link href="view/Glider/glider.css" rel="stylesheet" type="text/css" />
         
