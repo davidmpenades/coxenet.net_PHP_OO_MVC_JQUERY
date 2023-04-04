@@ -1,6 +1,8 @@
 <?php
 	$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
 	include ($path . '/module/shop/model/DAO_shop.php');
+    // include($path . "model/middleware_auth.php");
+
 	@session_start();
 	if (isset($_SESSION["tiempo"])) {  
 		$_SESSION["tiempo"] = time(); //Devuelve la fecha actual

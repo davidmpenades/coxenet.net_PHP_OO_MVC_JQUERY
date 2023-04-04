@@ -1,7 +1,9 @@
 function protecturl() {
+    // console.log('hola');
     var token = localStorage.getItem('token');
     ajaxPromise('module/login/ctrl/ctrl_login.php?op=controluser', 'POST', 'JSON', { 'token': token })
         .then(function(data) {
+            console.log(data);
             if (data == "Correct_User") {
                 console.log("CORRECTO-->El usario coincide con la session");
             } else if (data == "Wrong_User") {
@@ -17,6 +19,7 @@ function control_activity() {
     if (token) {
         ajaxPromise('module/login/ctrl/ctrl_login.php?op=actividad', 'POST', 'JSON')
             .then(function(response) {
+                console.log(response);
                 if (response == "inactivo") {
                     console.log("usuario INACTIVO");
                     logout_auto();
@@ -49,14 +52,21 @@ function refresh_cookie() {
 }
 
 function logout_auto() {
-    localStorage.removeItem('token');
-    toastr.warning("Se ha cerrado la cuenta por seguridad!!");
-    setTimeout('window.location.href = "index.php?module=ctrl_login&op=login-register_view";', 2000);
+    ajaxPromise('module/login/ctrl/ctrl_login.php?op=logout', 'POST', 'JSON')
+    .then(function(data) {
+        window.location.reload();
+        localStorage.removeItem('token');
+        toastr.warning("Se ha cerrado la cuenta por seguridad!!");
+        setTimeout('window.location.href = "index.php?module=ctrl_login&op=login-register_view";', 2000);
+    }).catch(function() {
+        console.log('Something has occured');
+    });
 }
 
 $(document).ready(function() {
-    setInterval(function() { control_activity() }, 600000); //10min= 600000
+    setInterval(function() { control_activity() }, 30000); //10min= 600000
     protecturl();
-    setInterval(function() { refresh_token() }, 600000);
+    setInterval(function() { protecturl() }, 60000);
+    setInterval(function() { refresh_token() }, 50000);
     setInterval(function() { refresh_cookie() }, 600000);
 });

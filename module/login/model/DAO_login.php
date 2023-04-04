@@ -22,7 +22,7 @@
             $hashed_pass = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
             $hashavatar = md5(strtolower(trim($email))); 
             $avatar = "https://i.pravatar.cc/500?u=$hashavatar";
-            $sql ="   INSERT INTO `users`(`username`, `password`, `email`, `type_user`, `avatar`) 
+            $sql ="INSERT INTO `users`(`username`, `password`, `email`, `type_user`, `avatar`) 
             VALUES ('$username','$hashed_pass','$email','client','$avatar')";
 
             $conexion = connect::con();
@@ -32,7 +32,7 @@
         }
 
         function seleccionar_usuario($username){
-			$sql = "SELECT `username`, `password`, `email`, `type_user`, `avatar` FROM `users` WHERE username='$username'";
+			$sql = "CALL select_user('$username');";
 			$conexion = connect::con();
             $res = mysqli_query($conexion, $sql)->fetch_object();
             connect::close($conexion);
@@ -46,7 +46,7 @@
         }
 
         function select_data_user($username){
-			$sql = "SELECT * FROM users WHERE username='$username'";
+			$sql = "CALL select_data_user('$username');";
 			$conexion = connect::con();
             $res = mysqli_query($conexion, $sql)->fetch_object();
             connect::close($conexion);

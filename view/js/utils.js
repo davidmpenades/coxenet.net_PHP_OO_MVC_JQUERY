@@ -19,7 +19,7 @@ function load_menu() {
     var token = localStorage.getItem('token');
     // console.log(token);
     if (token) {
-        console.log(token);
+        // console.log(token);
         ajaxPromise('module/login/ctrl/ctrl_login.php?op=data_user', 'POST', 'JSON', { 'token': token })
             .then(function(data) {
                 // console.log(data);
@@ -44,9 +44,7 @@ function load_menu() {
                             '<a>' + data.username + '<a/>'  +
                             '<a id="logout"><i class="fa fa-sign-out">LOGOUT</i></a>'                                                       
                         );
-                  
-                  
-
+                        
             }).catch(function() {
                 console.log("Error al cargar los datos del user");
             });
@@ -92,8 +90,7 @@ function click_shop() {
 
 $(document).ready(function() {
     // console.log('hola');
-    // load_menu();
-    setTimeout('load_menu(); ', 1000);
+    load_menu();
 
     click_logout();
     // click_shop();

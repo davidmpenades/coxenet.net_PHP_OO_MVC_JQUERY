@@ -166,6 +166,11 @@ function loadDetails(id_car) {
       $(".date_img_dentro").empty();
       $(".date_car_dentro").empty();
       $(".filters").empty();
+      $("#all_cars").hide();
+      $("#show_paginator").hide();
+      $(".date_img_dentro").hide();
+      $(".date_car_dentro").hide();
+      $(".filters").hide();
       for (row in data[1][0]) {
         $("<div></div>")
           .attr({ id: data[1][0].img_car, class: "date_img_dentro" })
