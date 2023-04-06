@@ -246,4 +246,36 @@ class DAO_shop
 		
 		return $retrArray;
 	}
+	function select_load_likes($username){
+        $sql = "SELECT l.id_car FROM likes l WHERE l.id_user = (SELECT u.id_user FROM users u WHERE u.username = '$username')";
+        $conexion = connect::con();
+        $res = mysqli_query($conexion, $sql);
+        connect::close($conexion);
+        return $res;
+    }
+
+    function select_likes($id_car, $username){
+        $sql = "SELECT l.id_car FROM likes l
+				WHERE l.id_user = (SELECT u.id_user FROM users u WHERE u.username = '$username')
+				AND l.id_car = '$id_car'";
+        $conexion = connect::con();
+        $res = mysqli_query($conexion, $sql);
+        connect::close($conexion);
+        return $res;
+    }
+	function like($id_car, $username){
+        $sql = "INSERT INTO likes (id_user, id_car) VALUES ((SELECT  u.id_user FROM users u WHERE u.username= '$username') ,'$id_car');";
+        $conexion = connect::con();
+        $res = mysqli_query($conexion, $sql);
+        connect::close($conexion);
+        return $res;
+    }
+
+    function dislike($id_car, $username){
+        $sql = "DELETE FROM likes WHERE id_car='$id_car' AND id_user=(SELECT  u.id_user FROM users u WHERE u.username= '$username')";
+        $conexion = connect::con();
+        $res = mysqli_query($conexion, $sql);
+        connect::close($conexion);
+        return $res;
+    }
 }

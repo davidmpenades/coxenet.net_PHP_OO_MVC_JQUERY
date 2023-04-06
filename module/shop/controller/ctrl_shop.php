@@ -212,4 +212,56 @@
             echo json_encode($dinfo);
         }
 		break;
+		
+		case 'control_likes':
+        $token = $_POST['token'];
+        $id_car = $_POST['id_car'];
+
+        try {
+            $json = decode_token($token);
+            $dao = new DAO_shop();
+            $rdo = $dao->select_likes($id_car, $json['username']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+            exit;
+        }
+        if (!$rdo) {
+            echo json_encode("error");
+            exit;
+        } else {
+            $dinfo = array();
+            foreach ($rdo as $row) {
+                array_push($dinfo, $row);
+            }
+            if (count($dinfo) === 0) {
+                $dao = new DAO_shop();
+                $rdo = $dao->like($id_car, $json['username']);
+                echo json_encode("like");
+            } else {
+                $dao = new DAO_shop();
+                $rdo = $dao->dislike($id_car, $json['username']);
+                echo json_encode("dislike");
+            }
+        }
+        break;
+		case 'load_likes_user';
+        try {
+            $json = decode_token($_POST['token']);
+            $dao = new DAO_shop();
+            $rdo = $dao->select_load_likes($json['username']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+            exit;
+        }
+        if (!$rdo) {
+            echo json_encode("error");
+            exit;
+        } else {
+            $dinfo = array();
+            foreach ($rdo as $row) {
+                array_push($dinfo, $row);
+            }
+            echo json_encode($dinfo);
+        }
+        break;
 	}

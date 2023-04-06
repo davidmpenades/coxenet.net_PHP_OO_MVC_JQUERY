@@ -47,7 +47,8 @@ function ajaxForSearch(url, filter, total_prod, items) {
                 "</h4>" +
                 "<button id='" +
                 data[row].id_car +
-                "' class='more_info_list button-info' >Mas informacion</button>" +
+                "'class='more_info_list button-info' >Mas informacion</button>" +
+                "<a class='list__heart' id='" + data[row].id_car + "'><i id= " + data[row].id_car + " class='fa-solid fa-heart fa-lg'></i></a>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
@@ -66,6 +67,7 @@ function ajaxForSearch(url, filter, total_prod, items) {
         .appendTo("#all_cars")
         .html("<h1>No hay coches con estos filtros</h1>");
     });
+    load_likes_user();
 }
 
 function loadListCar(total_prod=0,items=3) {
@@ -80,6 +82,7 @@ function loadListCar(total_prod=0,items=3) {
   var home_comb = JSON.parse(localStorage.getItem("home_comb")) || false;
   var search = JSON.parse(localStorage.getItem("filters_search")) || false;
   var homevisitas = JSON.parse(localStorage.getItem("homevisitas")) || false;
+  var redirect_like = localStorage.getItem('redirect_like') || false;
   // var order = JSON.parse(localStorage.getItem("homeorder")) || false;
 
   // console.log(search);
@@ -133,6 +136,9 @@ function loadListCar(total_prod=0,items=3) {
     ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter", homevisitas);
     localStorage.removeItem("homevisitas");
   }
+  else if (redirect_like != false) {
+    redirect_login_like();
+  }
 //     else if (homeorder != false) {
    
 //     // console.log(homeorder);
@@ -153,6 +159,15 @@ function clicks() {
     // console.log(num_matricula);
     loadDetails(num_matricula);
   });
+  $(document).on("click", ".list__heart", function() {
+    var id_car = this.getAttribute('id');
+    click_like(id_car, "list_all");
+});
+
+$(document).on("click", ".details__heart", function() {
+    var id_car = this.getAttribute('id');
+    click_like(id_car, "details");
+});
 }
 
 function loadDetails(id_car) {
@@ -608,6 +623,19 @@ function mapBox(id) {
     markerOntinyent.setPopup(minPopup)
         .setLngLat([id.lon, id.lat])
         .addTo(map);
+}
+function load_likes_user() {
+  var token = localStorage.getItem('token');
+  if (token) {
+      ajaxPromise("module/shop/controller/ctrl_shop.php?op=load_likes_user", 'POST', 'JSON', { 'token': token })
+          .then(function(data) {
+              for (row in data) {
+                  $("#" + data[row].id_car + ".fa-heart").toggleClass('like_red');
+              }
+          }).catch(function() {
+              window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function load_like_user SHOP";
+          });
+  }
 }
 
 $(document).ready(function () {
