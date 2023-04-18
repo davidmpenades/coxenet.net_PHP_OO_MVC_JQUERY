@@ -2,8 +2,7 @@
 	$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
     include($path . "/model/connect.php");
 
-class DAO_shop
-{
+class DAO_shop{
 	function select_all_cars($total_prod,$items_page){
 		// echo json_encode($total_prod);
 		// exit;
@@ -59,7 +58,7 @@ class DAO_shop
 
 		$res = mysqli_query($connection, $sql);
 		connect::close($connection);
-		// return $res;
+		return $res;
 	}
 	function select_car($id_car)
 	{

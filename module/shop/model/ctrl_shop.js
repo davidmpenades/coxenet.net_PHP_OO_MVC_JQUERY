@@ -48,7 +48,7 @@ function ajaxForSearch(url, filter, total_prod, items) {
                 "<button id='" +
                 data[row].id_car +
                 "'class='more_info_list button-info' >Mas informacion</button>" +
-                "<a class='list__heart' id='" + data[row].id_car + "'><i id= " + data[row].id_car + " class='fa-solid fa-heart fa-lg'></i></a>" +
+                "<a class='list_heart' id='" + data[row].id_car + "'><i id= " + data[row].id_car + "  class='fa-solid fa-heart fa-lg'>'></i></a>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
@@ -141,7 +141,7 @@ function loadListCar(total_prod=0,items=3) {
   }
 //     else if (homeorder != false) {
    
-//     // console.log(homeorder);
+// //     // console.log(homeorder);
   
 //     ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter_order", homeorder);
 //     localStorage.removeItem("homeorder");
@@ -159,12 +159,12 @@ function clicks() {
     // console.log(num_matricula);
     loadDetails(num_matricula);
   });
-  $(document).on("click", ".list__heart", function() {
+  $(document).on("click", ".list_heart", function() {
     var id_car = this.getAttribute('id');
     click_like(id_car, "list_all");
 });
 
-$(document).on("click", ".details__heart", function() {
+$(document).on("click", ".details_heart", function() {
     var id_car = this.getAttribute('id');
     click_like(id_car, "details");
 });
@@ -256,11 +256,11 @@ function loadDetails(id_car) {
             "<span class='button' id='price_details'>" +
             data[0].precio +
             "€" +
-            "<a class='details__heart' id='" +
+            "<a class='details_heart' id='" +
             data[0].id_car +
             "'><i id=" +
             data[0].id_car +
-            " class='fa-solid fa-heart fa-lg'></i></a>" +
+            "  class='fa-solid fa-heart fa-lg'>'></i></a>" +
             "</div>" +
             "</div>" +
             "</div>" +
@@ -280,6 +280,7 @@ function loadDetails(id_car) {
       mapBox(data[0]);
 
         more_cars_related(data[0].marca);
+        load_likes_user();
       
     })
     .catch(function () {
@@ -624,6 +625,28 @@ function mapBox(id) {
         .setLngLat([id.lon, id.lat])
         .addTo(map);
 }
+function click_like(id_car, lugar) {
+  var token = localStorage.getItem('token');
+  if (token) {
+      ajaxPromise("module/shop/controller/ctrl_shop.php?op=control_likes", 'POST', 'JSON', { 'id_car': id_car, 'token': token })
+          .then(function(data) {
+            console.log(data);
+              $("#" + id_car + ".fa-heart").toggleClass('like_red');
+          }).catch(function() {
+              window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function click_like SHOP";
+          });
+
+  } else {
+      const redirect = [];
+      redirect.push(id_car, lugar);
+
+      localStorage.setItem('redirect_like', redirect);
+      localStorage.setItem('id_car', id_car);
+
+      toastr.warning("Debes de iniciar session");
+      setTimeout("location.href = 'index.php?page=ctrl_login&op=login-register_view';", 1000);
+  }
+}
 function load_likes_user() {
   var token = localStorage.getItem('token');
   if (token) {
@@ -637,7 +660,17 @@ function load_likes_user() {
           });
   }
 }
-
+function redirect_login_like() {
+  var redirect = localStorage.getItem('redirect_like').split(",");
+  if (redirect[1] == "details") {
+      loadDetails(redirect[0]);
+      localStorage.removeItem('redirect_like');
+      localStorage.removeItem('page');
+  } else if (redirect[1] == "list_all") {
+      localStorage.removeItem('redirect_like');
+      loadListCar();
+  }
+}
 $(document).ready(function () {
   loadListCar();
   clicks();

@@ -1,7 +1,7 @@
 <?php
 	$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
 	include ($path . '/module/shop/model/DAO_shop.php');
-    // include($path . "model/middleware_auth.php");
+    include($path . "model/middleware_auth.php");
 
 	@session_start();
 	if (isset($_SESSION["tiempo"])) {  
@@ -216,6 +216,8 @@
 		case 'control_likes':
         $token = $_POST['token'];
         $id_car = $_POST['id_car'];
+		// echo json_encode($id_car);
+		// exit;
 
         try {
             $json = decode_token($token);
@@ -236,11 +238,11 @@
             if (count($dinfo) === 0) {
                 $dao = new DAO_shop();
                 $rdo = $dao->like($id_car, $json['username']);
-                echo json_encode("like");
+                echo json_encode("1");
             } else {
                 $dao = new DAO_shop();
                 $rdo = $dao->dislike($id_car, $json['username']);
-                echo json_encode("dislike");
+                echo json_encode("0");
             }
         }
         break;

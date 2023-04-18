@@ -74,3 +74,15 @@ h5 {
     /* Green */
     color: rgb(236, 243, 245);
 }
+.listheart {
+    float: left;
+    margin-left: 3%;
+  }
+  
+  .detailsheart {
+    font-size: 23px;
+  }
+  
+  .like_red {
+    color: rgb(235, 12, 12);
+  }

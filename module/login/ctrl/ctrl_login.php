@@ -3,10 +3,10 @@ $path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
 include($path . "/module/login/model/DAO_login.php");
 include($path . "model/middleware_auth.php");
 @session_start();
-if (isset($_SESSION["tiempo"])) {  
-    $_SESSION["tiempo"] = time(); //Devuelve la fecha actual
-    $_SESSION["inicio_sesion"] = time();
- }
+// if (isset($_SESSION["tiempo"])) {  
+//     $_SESSION["tiempo"] = time(); //Devuelve la fecha actual
+//     $_SESSION["inicio_sesion"] = time();
+//  }
 switch ($_GET['op']) {
     
     case 'login-register_view';
@@ -138,7 +138,7 @@ switch ($_GET['op']) {
             // $timestamp = $_SESSION["tiempo"];
             // $date = date("d-m-y H:i:s", $timestamp);
 
-            if ((time() - $_SESSION["inicio_sesion"]) >= 3) { //60=30min
+            if ((time() - $_SESSION["inicio_sesion"]) >= 60) { //60=30min
                 
                 echo json_encode("inactivo");
                 exit();
