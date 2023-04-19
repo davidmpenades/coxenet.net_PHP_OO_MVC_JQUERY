@@ -1,4 +1,3 @@
-
 function ajaxForSearch(url, filter, total_prod, items) {
   ajaxPromise(url, "POST", "JSON", { 'filter': filter, 'total_prod': total_prod,'items':items })
     .then(function (data) {
@@ -647,29 +646,42 @@ function click_like(id_car, lugar) {
       setTimeout("location.href = 'index.php?page=ctrl_login&op=login-register_view';", 1000);
   }
 }
-function load_likes_user() {
+async function  load_likes_user() {
   var token = localStorage.getItem('token');
   if (token) {
-      ajaxPromise("module/shop/controller/ctrl_shop.php?op=load_likes_user", 'POST', 'JSON', { 'token': token })
-          .then(function(data) {
-              for (row in data) {
-                  $("#" + data[row].id_car + ".fa-heart").toggleClass('like_red');
-              }
-          }).catch(function() {
-              window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function load_like_user SHOP";
-          });
+    const data = await ajaxPromise("module/shop/controller/ctrl_shop.php?op=load_likes_user", 'POST', 'JSON', { 'token': token })
+    console.log(data);
+    for (row in data) {
+          $("#" + data[row].id_car + ".fa-heart").toggleClass('like_red');
+
+      }
+    localStorage.removeItem("redirect_like");
+
+      // ajaxPromise("module/shop/controller/ctrl_shop.php?op=load_likes_user", 'POST', 'JSON', { 'token': token })
+      //     .then(function(data) {
+      //         for (row in data) {
+      //             $("#" + data[row].id_car + ".fa-heart").toggleClass('like_red');
+      //         }
+      //     }).catch(function() {
+      //         window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function load_like_user SHOP";
+      //     });
   }
 }
 function redirect_login_like() {
-  var redirect = localStorage.getItem('redirect_like').split(",");
-  if (redirect[1] == "details") {
-      loadDetails(redirect[0]);
-      localStorage.removeItem('redirect_like');
-      localStorage.removeItem('page');
-  } else if (redirect[1] == "list_all") {
-      localStorage.removeItem('redirect_like');
-      loadListCar();
-  }
+  // console.log("hola");
+  //token
+  var token = localStorage.getItem('token');
+  var id_car = localStorage.getItem('id_car');
+  // console.log(token);
+  // console.log(id_car);
+
+    ajaxPromise("module/shop/controller/ctrl_shop.php?op=control_likes", 'POST', 'JSON', { 'id_car': id_car, 'token': token })
+        .then(function(data) {
+          console.log(data);
+        }).catch(function() {
+            window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function click_like SHOP";
+        }); 
+  loadDetails(id_car);
 }
 $(document).ready(function () {
   loadListCar();

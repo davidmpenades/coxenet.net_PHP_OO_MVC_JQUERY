@@ -127,6 +127,8 @@ function validate_register() {
 //////////////////////////LOGIN//////////////////////////////////////////////////////////////
 function login() {
     // console.log("hola login");
+    var redirect = localStorage.getItem('redirect_like');
+    console.log(redirect);
     if (validate_login() != 0) {
         // console.log(validate_login);
         var data = $('#login__form').serialize();
@@ -140,12 +142,12 @@ function login() {
                     document.getElementById('error_passwd_log').innerHTML = "La contraseña es incorrecta"
                 } else {
                     localStorage.setItem("token", result);
-                    toastr.success("Loged succesfully");
-                    // setTimeout(' window.location.href = "index.php?page=ctrl_home&op=list"; ', 1000);
+                    // toastr.success("Loged succesfully");
+                  if(redirect){
+                    window.location.href = "index.php?page=ctrl_shop&op=list_shop";
+                  } else{ 
                     window.location.href = "index.php?page=ctrl_home&op=list";
-
-
-
+                  }
                 }
             }).catch(function(textStatus) {
                 if (console && console.log) {

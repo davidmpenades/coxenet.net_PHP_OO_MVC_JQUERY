@@ -20,6 +20,8 @@
                     <li><a href="index.php?page=aboutus">Conocenos</a></li>
                     <li><a href="index.php?page=contactus">Contacto</a></li>                    
                     <li><a  id="button_login" href="index.php?page=ctrl_login&op=login-register_view">REGISTER-LOGIN</a></li>
+                    <li><a  id="button_cart" href="index.php?page=ctrl_cart&op=load_cart">CARRITO</a></li>
+                    <!-- <li><div class="bi bi-cart4"></div></li> -->
                     <li><div id="user_info"></div></li>
                     <li><div  class="log-icon" ></div></li>                    
                 </ul>

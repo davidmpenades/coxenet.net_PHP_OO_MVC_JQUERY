@@ -1,5 +1,5 @@
 <?php
-	$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
+	$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V11/';
 	include ($path . '/module/shop/model/DAO_shop.php');
     include($path . "model/middleware_auth.php");
 

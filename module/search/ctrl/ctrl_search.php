@@ -1,5 +1,5 @@
 <?php
-$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
+$path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V11/';
 include($path . '/module/search/model/DAO_search.php');
 
 switch ($_GET['op']) {

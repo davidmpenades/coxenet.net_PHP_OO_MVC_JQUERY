@@ -1,5 +1,5 @@
 <?php
-    $path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V10/';
+    $path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V11/';
 	include($path . "/model/connect.php");
 
     class DAOLogin{
