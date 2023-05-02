@@ -32,7 +32,7 @@
         }
 
         function seleccionar_usuario($username){
-			$sql = "CALL select_user('$username');";
+			$sql = "SELECT `username`, `password`, `email`, `type_user`, `avatar` FROM `users` WHERE username='$username'";
 			$conexion = connect::con();
             $res = mysqli_query($conexion, $sql)->fetch_object();
             connect::close($conexion);
@@ -46,7 +46,7 @@
         }
 
         function select_data_user($username){
-			$sql = "CALL select_data_user('$username');";
+			$sql = "SELECT * FROM users WHERE username='$username'";
 			$conexion = connect::con();
             $res = mysqli_query($conexion, $sql)->fetch_object();
             connect::close($conexion);

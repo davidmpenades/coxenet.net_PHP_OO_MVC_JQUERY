@@ -15,13 +15,12 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="index.php?page=ctrl_home&op=list">HOME</a></li>   
                     <li><a href="index.php?page=ctrl_shop&op=list_shop">SHOP</a></li>                  
-                    <li><a href="index.php?page=controller_cars&op=list">Coches</a></li>
+                    <!-- <li><a href="index.php?page=controller_cars&op=list">Coches</a></li> -->
                     <li><a href="index.php?page=services">Servicios</a></li>
                     <li><a href="index.php?page=aboutus">Conocenos</a></li>
                     <li><a href="index.php?page=contactus">Contacto</a></li>                    
-                    <li><a  id="button_login" href="index.php?page=ctrl_login&op=login-register_view">REGISTER-LOGIN</a></li>
-                    <li><a  id="button_cart" href="index.php?page=ctrl_cart&op=load_cart">CARRITO</a></li>
-                    <!-- <li><div class="bi bi-cart4"></div></li> -->
+                    <li><a  id="button_login" href="index.php?page=ctrl_login&op=login-register_view">Register-login</a></li>
+                    <li><a  id="button_cart" href="index.php?page=ctrl_cart&op=view"><i class="fa-solid fa-cart-shopping fa-2xl"></i></a></li>
                     <li><div id="user_info"></div></li>
                     <li><div  class="log-icon" ></div></li>                    
                 </ul>

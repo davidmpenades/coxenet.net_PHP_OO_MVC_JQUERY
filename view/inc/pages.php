@@ -14,7 +14,7 @@ if(isset($_GET['page'])){
 			include("module/login/ctrl/".$_GET['page'].".php");
 			break;
 		case "ctrl_cart";
-			include("module/cart/ctrl/".$_GET['page'].".php");
+			include("module/cart/controller/".$_GET['page'].".php");
 			break;
 		case "services";
 			include("module/services/".$_GET['page'].".html");

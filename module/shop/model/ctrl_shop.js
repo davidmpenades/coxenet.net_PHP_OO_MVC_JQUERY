@@ -101,8 +101,7 @@ function loadListCar(total_prod=0,items=3) {
   }
   else if (home_tipo != false) {
     console.log("hola3persi");
-   
-   
+     
     ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter_tipo", home_tipo,total_prod,items);
     localStorage.setItem('filter_pag',JSON.stringify(home_tipo));
 
@@ -132,19 +131,12 @@ function loadListCar(total_prod=0,items=3) {
    
     // console.log("hola search");
   
-    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter", homevisitas);
+    ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter", homevisitas,total_prod,items);
     localStorage.removeItem("homevisitas");
   }
   else if (redirect_like != false) {
     redirect_login_like();
   }
-//     else if (homeorder != false) {
-   
-// //     // console.log(homeorder);
-  
-//     ajaxForSearch("module/shop/controller/ctrl_shop.php?op=filter_order", homeorder);
-//     localStorage.removeItem("homeorder");
-// }
   else {
  
     ajaxForSearch("module/shop/controller/ctrl_shop.php?op=all_cars",undefined,total_prod,items);
@@ -161,12 +153,17 @@ function clicks() {
   $(document).on("click", ".list_heart", function() {
     var id_car = this.getAttribute('id');
     click_like(id_car, "list_all");
-});
+  });
 
-$(document).on("click", ".details_heart", function() {
+  $(document).on("click", ".details_heart", function() {
+      var id_car = this.getAttribute('id');
+      click_like(id_car, "details");
+  });
+  $(document).on("click", ".add", function() {
     var id_car = this.getAttribute('id');
-    click_like(id_car, "details");
-});
+    add_cart(id_car);
+  });
+
 }
 
 function loadDetails(id_car) {
@@ -174,7 +171,7 @@ function loadDetails(id_car) {
   ajaxPromise(
     "module/shop/controller/ctrl_shop.php?op=one_car&id=" + id_car,"GET","JSON")
     .then(function (data) {
-      // console.log(data);
+      console.log(data);
       $("#all_cars").empty();
       $("#show_paginator").empty();
       $(".date_img_dentro").empty();
@@ -250,7 +247,7 @@ function loadDetails(id_car) {
             "</b></h3>" +
             "<p>Este vehículo tiene 2 años de garantia</p>" +
             "<div class='buttons_details'>" +
-            "<a class='button add' href='#'>Añadir al carrito</a>" +
+            "<a class='button add' href='#' id='"+ data[0].id_car+"'>Añadir al carrito</a>" +
             "<a class='button buy' href='#'>Comprar</a>" +
             "<span class='button' id='price_details'>" +
             data[0].precio +
@@ -377,6 +374,7 @@ function load_pagination() {
     console.log("hola filter_pag");
     var url = "module/shop/controller/ctrl_shop.php?op=count_filters";
     var filter = JSON.parse(localStorage.getItem("filter_pag"));
+    remove(filter_pag);
     console.log(filter);
 } else {
     var url = "module/shop/controller/ctrl_shop.php?op=count_all";
@@ -683,7 +681,16 @@ function redirect_login_like() {
         }); 
   loadDetails(id_car);
 }
-$(document).ready(function () {
+function add_cart(id_car){//shop com a like
+      var token = localStorage.getItem('token');
+          ajaxPromise("module/cart/controller/ctrl_cart.php?op=insert_cart", 'POST', 'JSON', {'id_car': id_car, 'token': token})
+          .then(function(data) { 
+            toastr.success("Add to cart succesfully");
+          }).catch(function() {
+              window.location.href = 'index.php?page=error503'
+          });         
+  }
+$(function () {
   loadListCar();
   clicks();
   print_filters();

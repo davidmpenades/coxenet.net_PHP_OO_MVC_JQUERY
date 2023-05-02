@@ -64,7 +64,7 @@ function logout_auto() {
 }
 
 $(document).ready(function() {
-    setInterval(function() { control_activity() }, 30000); //10min= 600000
+    setInterval(function() { control_activity() }, 600000); //10min= 600000
     protecturl();
     setInterval(function() { protecturl() }, 60000);
     setInterval(function() { refresh_token() }, 50000);

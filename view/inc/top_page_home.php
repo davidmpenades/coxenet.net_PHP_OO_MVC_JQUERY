@@ -40,13 +40,15 @@
         		});
         	});
 	    </script>
-		
+        <script src="view/js/utils.js"></script>		
 	    <link href="view/assets/css/style.css" rel="stylesheet" type="text/css" />
         <link href="view/assets/css/Home_cards.css" rel="stylesheet" type="text/css" />
 
-        <script src="view/js/utils.js"></script>
         <script src="view/js/activity_user.js"></script>
 	    <script src="module/home/model/ctrl_home.js"></script>
+        <!-- FONTAWESOME -->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
         <!-- search -->
          <script src="module/search/model/ctrl_search.js"></script>
 		<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css"/>

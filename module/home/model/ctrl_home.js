@@ -134,7 +134,6 @@ function clicks() {
           window.location.href = 'index.php?page=ctrl_shop&op=list_shop';
         }, 500);  
     });
-
     //categoria_________________________________________
     $(document).on("click", '.click_cat', function () {//detectamos el click
       localStorage.removeItem("filter");//borramos los filtros

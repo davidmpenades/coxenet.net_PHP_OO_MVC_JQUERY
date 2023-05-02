@@ -41,13 +41,13 @@
         			}
         		});
         	});
-            //  shop
+            //   shop
 	    </script>
+        <script src="view/js/utils.js"></script>
 	    <script src="module/shop/model/ctrl_shop.js"></script>
         <link href="view/assets/css/style.css" rel="stylesheet" type="text/css" />
         <!-- search -->
         <script src="module/search/model/ctrl_search.js"></script>
-        <script src="view/js/utils.js"></script>
 		<script src="view/assets/js/custom.js"></script>
 		<!-- FONTAWESOME -->
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />

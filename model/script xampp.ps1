@@ -13,6 +13,8 @@ if($confirm -eq "Cancel") {
 # Creamos carpeta para la copia de seguridad
 New-Item -ItemType Directory -Path $backupDir -ErrorAction SilentlyContinue
 
+# Borramos data-old, si existe, para evitar problemas
+
 # Hacemos copia de seguridad de la carpeta mysql
 Copy-Item -Path "C:\xampp\mysql\*" -Destination "$backupDir" -Recurse -Force -ErrorAction SilentlyContinue
 
@@ -32,6 +34,10 @@ Copy-Item -Path "C:\xampp\mysql\data-old\ibdata1" -Destination "C:\xampp\mysql\d
 Get-ChildItem -Path "C:\xampp\mysql\data-old\" -Directory | 
 Where-Object { $_.Name -notin @("mysql", "performance_schema", "phpmyadmin") } |
 ForEach-Object { Copy-Item -Path $_.FullName -Destination "C:\xampp\mysql\data" -Recurse -Force }
+
+# Vamos a copiar los procedures almacenados
+
+# Borramos data-old
 
 # Ventana de confirmación
 $successMessage = "El script se ha ejecutado correctamente. Gracias por confiar en CAPITANHOMER."

@@ -44,8 +44,8 @@
 	    <link href="view/assets/css/style.css" rel="stylesheet" type="text/css" />
         <link href="view/assets/css/Home_cards.css" rel="stylesheet" type="text/css" />
         
-	    <script src="module/login/model/ctrl_login.js"></script>
         <script src="view/js/utils.js"></script>
+	    <script src="module/login/model/ctrl_login.js"></script>
         <script src="view/js/activity_user.js"></script>
 
 

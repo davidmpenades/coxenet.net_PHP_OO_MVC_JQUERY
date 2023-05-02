@@ -132,17 +132,17 @@ function login() {
     if (validate_login() != 0) {
         // console.log(validate_login);
         var data = $('#login__form').serialize();
-        // console.log(data);
+        console.log(data);
         ajaxPromise('module/login/ctrl/ctrl_login.php?op=login', 'POST', 'JSON', data)
             .then(function(result) {
-                // console.log(result);
+                console.log(result);
                 if (result == "error_user") {
                     document.getElementById('error_username_log').innerHTML = "El usario no existe,asegurase de que lo a escrito correctamente"
                 } else if (result == "error_passwd") {
                     document.getElementById('error_passwd_log').innerHTML = "La contraseña es incorrecta"
                 } else {
                     localStorage.setItem("token", result);
-                    // toastr.success("Loged succesfully");
+                    toastr.success("Loged succesfully");
                   if(redirect){
                     window.location.href = "index.php?page=ctrl_shop&op=list_shop";
                   } else{ 

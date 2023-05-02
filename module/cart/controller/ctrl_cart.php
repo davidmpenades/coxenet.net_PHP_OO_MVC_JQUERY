@@ -1,6 +1,6 @@
 <?php
         $path = $_SERVER['DOCUMENT_ROOT'] . '/MVC_cars_V11/';
-        include($path . "/module/home/model/DAO_cart.php");
+        include($path . "module/cart/model/DAO_cart.php");
         include($path . "model/middleware_auth.php");
 
         switch($_GET['op']){
@@ -9,16 +9,16 @@
                 break;
                     
             case 'insert_cart';    
+            //  echo json_encode("hola car.js");
+            //  exit;
+                $token = $_POST['token'];
+                $id_car = $_POST['id_car'];
                 try{
-                    $token = $_GET['user'];
-                    $secret = 'maytheforcebewithyou';
-    
-                    $JWT = new JWT;
-                    $json = $JWT->decode($token, $secret);  
-                    $json = json_decode($json, TRUE);
-                    
-                    $dao = new DAOCart();
-                    $rdo = $dao->select_product($json['name'], $_GET['id']);
+                    // echo json_encode($id_car);
+                    // exit;
+                    $json = decode_token($token);  
+                    $dao = new DAO_Cart();
+                    $rdo = $dao->select_product($json['username'], $id_car);
                 }catch (Exception $e){
                     echo json_encode("error");
                     exit;
@@ -28,29 +28,26 @@
                     array_push($dinfo, $row);
                 }
                 if(!$dinfo){
-                    $dao = new DAOCart();
-                    $rdo = $dao->insert_product($json['name'], $_GET['id']);
+                    $dao = new DAO_Cart();
+                    $rdo = $dao->insert_product($json['username'], $id_car);
                     echo json_encode("insert");
                     exit;
                 }else{
-                    $dao = new DAOCart();
-                    $rdo = $dao->update_product($json['name'], $_GET['id']);
+                    $dao = new DAO_Cart();
+                    $rdo = $dao->update_product($json['username'], $id_car);
                     echo json_encode("update");
                     exit;
                 }
                 break; 
         
-            case 'delete_cart';    
+            case 'delete_cart';  
+                 $token = $_POST['token'];
+            
                 try{
-                    $token = $_GET['user'];
-                    $secret = 'maytheforcebewithyou';
-    
-                    $JWT = new JWT;
-                    $json = $JWT->decode($token, $secret);  
-                    $json = json_decode($json, TRUE);
+                    $json = decode_token($token);  
                     
-                    $dao = new DAOCart();
-                    $rdo = $dao->delete_cart($json['name'], $_GET['id']);
+                    $dao = new DAO_Cart();
+                    $rdo = $dao->delete_cart($json['username'], $_POST['id_car']);
                 }catch (Exception $e){
                     echo json_encode("error");
                     exit;
@@ -64,17 +61,18 @@
                 }
                 break;         
 
-            case 'load_cart';    
+            case 'load_cart';   
+            //   echo json_encode("hola javascript");
+            //   exit; 
                 try{
-                    $token = $_GET['user'];
-                    $secret = 'maytheforcebewithyou';
+           
+                    $token = $_POST['token'];
     
-                    $JWT = new JWT;
-                    $json = $JWT->decode($token, $secret);  
-                    $json = json_decode($json, TRUE);
-                    
-                    $dao = new DAOCart();
-                    $rdo = $dao->select_user_cart($json['name']);
+                    $json = decode_token($token);  
+                    // echo json_encode($json);
+                    // exit;
+                    $dao = new DAO_Cart();
+                    $rdo = $dao->select_user_cart($json['username']);
                 }catch (Exception $e){
                     echo json_encode("error");
                     exit;
@@ -88,20 +86,21 @@
                         array_push($dinfo, $row);
                     }
                     echo json_encode($dinfo);
+                    exit;
                 }
                 break; 
 
-            case 'update_qty';    
+            case 'update_qty'; 
+
+                    $token = $_POST['token'];
+                    $quanty = $_POST['quanty'];
+                    $id_car = $_POST['id_car']; 
+                   
                 try{
-                    $token = $_GET['user'];
-                    $secret = 'maytheforcebewithyou';
-    
-                    $JWT = new JWT;
-                    $json = $JWT->decode($token, $secret);  
-                    $json = json_decode($json, TRUE);
-                    
-                    $dao = new DAOCart();
-                    $rdo = $dao->update_qty($json['name'], $_GET['id'],$_GET['qty']);
+                                       
+                    $json = decode_token($token);                     
+                    $dao = new DAO_Cart();
+                    $rdo = $dao->update_qty($json['username'], $id_car, $quanty);
                 }catch (Exception $e){
                     echo json_encode("error");
                     exit;
@@ -117,15 +116,12 @@
 
             case 'checkout';    
                 try{
-                    $token = $_GET['user'];
-                    $secret = 'maytheforcebewithyou';
+                  
+                    $token = $_POST['token'];
     
-                    $JWT = new JWT;
-                    $json = $JWT->decode($token, $secret);  
-                    $json = json_decode($json, TRUE);
-                    
-                    $dao = new DAOCart();
-                    $rdo = $dao->select_user_cart($json['name']);
+                    $json = decode_token($token); 
+                    $dao = new DAO_Cart();
+                    $rdo = $dao->select_user_cart($json['username']);
                 }catch (Exception $e){
                     echo json_encode("error");
                     exit;
@@ -134,9 +130,14 @@
                     echo json_encode("error");
                     exit;
                 }else{
-                    $dao = new DAOCart();
-                    $res = $dao->checkout($rdo, $json['name']);
-                    echo json_encode("checkout");
+                    $dinfo = array();
+                    foreach ($rdo as $row) {
+                        array_push($dinfo, $row);
+                    }
+                    $dao = new DAO_cart();
+                    $res = $dao->checkout($dinfo, $json['username']);
+                    echo json_encode($res);
+                    // echo json_encode("checkout realizado");
                     exit;
                 }
                 break; 

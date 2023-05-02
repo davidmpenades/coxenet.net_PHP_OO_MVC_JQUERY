@@ -17,9 +17,7 @@ function load_menu() {
 // console.log('hola1');
 
     var token = localStorage.getItem('token');
-    // console.log(token);
     if (token) {
-        // console.log(token);
         ajaxPromise('module/login/ctrl/ctrl_login.php?op=data_user', 'POST', 'JSON', { 'token': token })
             .then(function(data) {
                 // console.log(data);
@@ -55,6 +53,10 @@ function load_menu() {
         $('#user_info').empty();
         $('#user_info').hide();
         $('.log-icon').empty();
+        $('.log-icon').hide();
+        $('#button_cart').hide();
+        $('.buy').hide();
+        $('.add').hide();
         $('<a href="index.php?module=ctrl_login&op=login-register_view"><i id="col-ico" class="fa-solid fa-user fa-2xl"></i></a>').appendTo('.log-icon');
     }
 }
@@ -88,10 +90,9 @@ function click_shop() {
     });
 }
 
-$(document).ready(function() {
+$(function() {
     // console.log('hola');
     load_menu();
-
     click_logout();
     // click_shop();
 });
