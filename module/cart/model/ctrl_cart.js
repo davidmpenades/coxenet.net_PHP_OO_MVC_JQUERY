@@ -90,6 +90,8 @@ function checkout(){
         var token =  localStorage.getItem('token');
             ajaxPromise("module/cart/controller/ctrl_cart.php?op=checkout",'POST', 'JSON',{'token':token})
             .then(function(data) { 
+                console.log(data);
+                console.log("holaaaa");
                 toastr.success("Compra realizada");
 
                 setTimeout(window.location.href = "index.php?page=ctrl_home&op=list",1000);
