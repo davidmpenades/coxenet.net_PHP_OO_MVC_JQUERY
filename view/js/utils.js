@@ -20,17 +20,7 @@ function load_menu() {
     if (token) {
         ajaxPromise('module/login/ctrl/ctrl_login.php?op=data_user', 'POST', 'JSON', { 'token': token })
             .then(function(data) {
-                // console.log(data);
-                // if (data.type_user == "client") {
-                //     console.log("Client loged");
-                //     $('.opc_CRUD').empty();
-                //     $('.opc_exceptions').empty();
-                // } else {
-                //     console.log("Admin loged");
-                //     $('.opc_CRUD').show();
-                //     $('.opc_exceptions').show();
-                // }
-        
+                
                     // Si el token existe en localStorage, mostrar los divs para usuario logueado
                     $('#button_login').hide();
                     $('#button_login').empty();
@@ -94,5 +84,4 @@ $(function() {
     // console.log('hola');
     load_menu();
     click_logout();
-    // click_shop();
 });

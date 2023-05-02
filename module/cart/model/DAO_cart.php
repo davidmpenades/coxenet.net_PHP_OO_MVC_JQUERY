@@ -58,8 +58,7 @@ class DAO_Cart{
     }
 
     function checkout($data, $username){
-        // $username = md5($username);
-        $date = date("Ymd");
+        
         $array = [];
         foreach($data as $fila){
             // $cod_ped = $username;
@@ -67,8 +66,7 @@ class DAO_Cart{
             $precio = $fila["precio"];
             $total_precio = $fila["precio"]*$fila["quanty"];
             $sql = "CALL checkoutOK('$username',$id_car,$precio,$total_precio);";
-            // $sql = "INSERT INTO `pedidos`( `username`, `id_car`, `precio`, `precio_total`, `fecha`) 
-            //         VALUES ('$username','$id_car','$precio','$total_precio','$date')";
+            
             $conexion = connect::con();
             $res = mysqli_query($conexion, $sql);
             if(!empty($res)){
