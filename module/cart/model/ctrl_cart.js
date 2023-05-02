@@ -58,8 +58,9 @@ function remove_cart(){
 
             ajaxPromise("module/cart/controller/ctrl_cart.php?op=delete_cart",'POST','JSON',{'id_car':id_car, 'token':token})
             .then(function(data) { 
-                console.log(data);
+                window.location.reload();
                 $('div.basket-product#'+ id_car).empty();
+                
             }).catch(function() {
                 window.location.href = 'index.php?page=error503'
             });   
